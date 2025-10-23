@@ -3,42 +3,134 @@
 <head>
     <meta charset="UTF-8">
     <title>Portafolio de Alejandro Pascual Ramos</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --main-color: #274472;
+            --accent: #41729f;
+            --bg-light: #f6fafd;
+            --white: #fff;
+            --shadow: 0 4px 14px rgba(39, 68, 114, 0.08);
+            --radius: 8px;
+        }
+        body {
+            background: var(--bg-light);
+            font-family: 'Roboto', Arial, sans-serif;
+            color: var(--main-color);
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background: var(--main-color);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem 0 1.3rem 0;
+            box-shadow: var(--shadow);
+            border-radius: 0 0 var(--radius) var(--radius);
+        }
+        h1 {
+            margin: 0;
+            font-size: 2.4rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        main {
+            max-width: 700px;
+            margin: 2rem auto;
+            background: var(--white);
+            box-shadow: var(--shadow);
+            border-radius: var(--radius);
+            padding: 2rem;
+        }
+        ul.portfolio {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        ul.portfolio li {
+            margin-bottom: 1.7rem;
+            transition: box-shadow 0.15s;
+            border-radius: var(--radius);
+            background: #f2f8ff;
+            box-shadow: 0 2px 8px rgba(65, 114, 159, 0.05);
+            padding: 1.2rem 1rem;
+            cursor: pointer;
+        }
+        ul.portfolio li:hover {
+            box-shadow: 0 6px 20px rgba(65, 114, 159, 0.13);
+            background: #e2f0ff;
+            transform: translateY(-2px) scale(1.015);
+        }
+        h2 {
+            margin: 0 0 0.4rem 0;
+            font-size: 1.18rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+        a.pdf-link {
+            display: inline-block;
+            padding: 0.45rem 1.1rem;
+            background: var(--main-color);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: var(--radius);
+            transition: background 0.2s, color 0.2s;
+            font-weight: 500;
+            margin-top: 0.4rem;
+        }
+        a.pdf-link:hover {
+            background: var(--accent);
+            color: var(--white);
+        }
+        @media (max-width: 600px) {
+            main {
+                padding: 1rem;
+            }
+            h1 {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Portafolio de Alejandro Pascual Ramos</h1>
-    <ul>
-        <li>
-            <h2>Tarea 2ASIR. Montar un servidor de IA</h2>
-            <a href="https://alejandropr05.github.io/2asirAFH2526/carpetapdf/Curso IA Alejandro Pascual Ramos ASIR.pdf" target="_blank">Ver PDF</a>
-        </li>
-        <li>
-            <h2>Tarea 2ASIR. Desmontar y Montar un PC en el taller</h2>
-            <a href="https://alejandropr05.github.io/2asirAFH2526/carpetapdf/Tarea 2ASIR. Desmontar y Montar un PC en el taller.pdf" target="_blank">Ver PDF</a>
-        </li>
-        <li>
-            <h2>Tarea 2ASIR. Desmontar y Montar un servidor y un portátil en el taller</h2>
-            <a href="https://alejandropr05.github.io/2asirAFH2526/carpetapdf/Tarea 2ASIR. Desmontar y Montar un servidor y un portátil en el taller.pdf" target="_blank">Ver PDF</a>
-        </li>
-        <li>
-            <h2>Tarea 2ASIR. Crear una web estática en Github.</h2>
-            <a href="https://alejandropr05.github.io/2asirAFH2526/carpetatrabajos/crearwebestatica.html" target="_blank">Ver PDF</a>
-        </li>
-        <li>
-            <h2>T 2ASIR. Conexión remota</h2>
-            <a href="enlace-al-pdf-5.pdf" target="_blank">Ver PDF</a>
-        </li>
-        <li>
-            <h2>Tarea. Comparativa de modelos</h2>
-            <a href="enlace-al-pdf-6.pdf" target="_blank">Ver PDF</a>
-        </li>
-        <li>
-            <h2>Tarea. Fine tunning</h2>
-            <a href="enlace-al-pdf-7.pdf" target="_blank">Ver PDF</a>
-        </li>
-        <li>
-            <h2>Tarea. Cuantización</h2>
-            <a href="enlace-al-pdf-8.pdf" target="_blank">Ver PDF</a>
-        </li>
-    </ul>
+    <header>
+        <h1>Portafolio de Alejandro Pascual Ramos</h1>
+    </header>
+    <main>
+        <ul class="portfolio">
+            <li>
+                <h2>Tarea 2ASIR. Montar un servidor de IA</h2>
+                <a class="pdf-link" href="https://alejandropr05.github.io/2asirAFH2526/carpetapdf/Curso IA Alejandro Pascual Ramos ASIR.pdf" target="_blank">Ver PDF</a>
+            </li>
+            <li>
+                <h2>Tarea 2ASIR. Desmontar y Montar un PC en el taller</h2>
+                <a class="pdf-link" href="https://alejandropr05.github.io/2asirAFH2526/carpetapdf/Tarea%202ASIR.%20Desmontar%20y%20Montar%20un%20PC%20en%20el%20taller.pdf" target="_blank">Ver PDF</a>
+            </li>
+            <li>
+                <h2>Tarea 2ASIR. Desmontar y Montar un servidor y un portátil en el taller</h2>
+                <a class="pdf-link" href="https://alejandropr05.github.io/2asirAFH2526/carpetapdf/Tarea%202ASIR.%20Desmontar%20y%20Montar%20un%20servidor%20y%20un%20port%C3%A1til%20en%20el%20taller.pdf" target="_blank">Ver PDF</a>
+            </li>
+            <li>
+                <h2>Tarea 2ASIR. Crear una web estática en Github.</h2>
+                <a class="pdf-link" href="https://alejandropr05.github.io/2asirAFH2526/carpetatrabajos/crearwebestatica.html" target="_blank">Ver PDF</a>
+            </li>
+            <li>
+                <h2>T 2ASIR. Conexión remota</h2>
+                <a class="pdf-link" href="enlace-al-pdf-5.pdf" target="_blank">Ver PDF</a>
+            </li>
+            <li>
+                <h2>Tarea. Comparativa de modelos</h2>
+                <a class="pdf-link" href="enlace-al-pdf-6.pdf" target="_blank">Ver PDF</a>
+            </li>
+            <li>
+                <h2>Tarea. Fine tunning</h2>
+                <a class="pdf-link" href="enlace-al-pdf-7.pdf" target="_blank">Ver PDF</a>
+            </li>
+            <li>
+                <h2>Tarea. Cuantización</h2>
+                <a class="pdf-link" href="enlace-al-pdf-8.pdf" target="_blank">Ver PDF</a>
+            </li>
+        </ul>
+    </main>
 </body>
 </html>
