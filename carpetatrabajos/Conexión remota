@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Práctica Terminales - Capturas</title>
+    <style>
+        body {
+            background: #f4f6f8;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .main-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 9px 36px rgba(60,60,70,0.12), 0 1.5px 4px rgba(0,0,0,0.12);
+            padding: 40px 36px;
+        }
+        h1 {
+            color: #203354;
+            font-size: 2.4em;
+            letter-spacing: 1px;
+            margin-top: 0;
+        }
+        .texto-superior {
+            background: linear-gradient(90deg, #e3f2fd 10%, #fce4ec 100%);
+            padding: 24px 22px;
+            border-radius: 10px;
+            margin-bottom: 32px;
+            font-size: 1.13em;
+            color: #283747;
+            box-shadow: 0 2px 10px #e2ecfa70;
+        }
+        .img-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 30px;
+        }
+        .img-item {
+            background: #f9fafb;
+            border-radius: 11px;
+            box-shadow: 0 3px 18px rgba(87,94,120,0.15), 0 1px 2px rgba(0,0,0,0.06);
+            width: 295px;
+            margin-bottom: 10px;
+            padding: 16px 14px 14px 14px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.18s;
+        }
+        .img-item:hover {
+            transform: translateY(-6px) scale(1.03);
+            box-shadow: 0 8px 28px #90caf9af;
+        }
+        .img-item img {
+            width: 100%;
+            border-radius: 6px;
+            border: 1.5px solid #bbdefb;
+            background: #fff;
+        }
+        .img-label {
+            font-size: 1.01em;
+            color: #31445b;
+            margin-top: 9px;
+            text-align: center;
+            font-weight: 500;
+        }
+        @media (max-width: 900px) {
+            .main-container {
+                padding: 22px 5vw;
+            }
+            .img-container {
+                gap: 16px;
+            }
+            .img-item {
+                width: 46vw;
+                min-width: 185px;
+            }
+        }
+        @media (max-width: 600px) {
+            .main-container {
+                padding: 10px 0;
+            }
+            .img-item {
+                width: 98vw;
+                min-width: 120px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <h1>Práctica Terminales - Capturas de ejercicios</h1>
+        <div class="texto-superior">
+            <p>
+                Bienvenido/a. Aquí tienes todas las capturas realizadas para la práctica de terminales.<br>
+                Puedes agregar aquí instrucciones, observaciones o cualquier comentario explicativo sobre los ejercicios.<br>
+                <em>Ejemplo:</em> "Consulta cada imagen para ver los pasos de instalación, conexiones y pruebas entre diferentes sistemas."
+            </p>
+        </div>
+        <div class="img-container">
+            <div class="img-item">
+              <img src="Imágenes/Instalacion-team-viewer.png" alt="Instalación TeamViewer">
+              <div class="img-label">Instalación TeamViewer</div>
+            </div>
+            <div class="img-item">
+              <img src="Imágenes/Linux-linux.png" alt="Linux a Linux SSH">
+              <div class="img-label">Linux a Linux</div>
+            </div>
+            <div class="img-item">
+              <img src="Imágenes/Linux-windows.png" alt="Linux a Windows SSH">
+              <div class="img-label">Linux a Windows</div>
+            </div>
+            <div class="img-item">
+              <img src="Imágenes/Telefono-linux.png" alt="Teléfono a Linux">
+              <div class="img-label">Teléfono a Linux</div>
+            </div>
+            <div class="img-item">
+              <img src="Imágenes/Telefono-windows.png" alt="Teléfono a Windows">
+              <div class="img-label">Teléfono a Windows</div>
+            </div>
+            <div class="img-item">
+              <img src="Imágenes/Windows-linux.png" alt="Windows a Linux">
+              <div class="img-label">Windows a Linux</div>
+            </div>
+            <div class="img-item">
+              <img src="Imágenes/Windows-windows.png" alt="Windows a Windows">
+              <div class="img-label">Windows a Windows</div>
+            </div>
+            <div class="img-item">
+              <img src="Imágenes/conexion-putty.png" alt="Conexión Putty">
+              <div class="img-label">Conexión Putty</div>
+            </div>
+            <div class="img-item">
+              <img src="Imágenes/conexion-remmina.png" alt="Conexión Remmina">
+              <div class="img-label">Conexión Remmina</div>
+            </div>
+            <div class="img-item">
+              <img src="Imágenes/conf-remmina.png" alt="Configuración Remmina">
+              <div class="img-label">Configuración Remmina</div>
+            </div>
+            <div class="img-item">
+              <img src="Imágenes/descargar-open-ssh.png" alt="Descargar OpenSSH">
+              <div class="img-label">Descargar OpenSSH</div>
+            </div>
+            <div class="img-item">
+              <img src="Imágenes/entrar-sin-contraseña.png" alt="Entrar sin contraseña">
+              <div class="img-label">Entrar sin contraseña</div>
+            </div>
+            <div class="img-item">
+              <img src="Imágenes/escritorio-remoto-contraseña.png" alt="Escritorio remoto contraseña">
+              <div class="img-label">Escritorio remoto contraseña</div>
+            </div>
+            <div class="img-item">
+              <img src="Imágenes/escritorio-remoto-w.png" alt="Escritorio remoto Windows">
+              <div class="img-label">Escritorio remoto Windows</div>
+            </div>
+            <div class="img-item">
+              <img src="Imágenes/instalacion-putty.png" alt="Instalación Putty">
+              <div class="img-label">Instalación Putty</div>
+            </div>
+            <div class="img-item">
+              <img src="Imágenes/ssh-desde-otro-linux.png" alt="SSH desde otro Linux">
+              <div class="img-label">SSH desde otro Linux</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
