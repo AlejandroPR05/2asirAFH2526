@@ -11,82 +11,67 @@
             padding: 0;
         }
         .main-container {
-            max-width: 1200px;
+            max-width: 960px;
             margin: 40px auto;
             background: #fff;
             border-radius: 18px;
             box-shadow: 0 9px 36px rgba(60,60,70,0.12), 0 1.5px 4px rgba(0,0,0,0.12);
-            padding: 40px 36px;
+            padding: 40px 24px;
         }
         h1 {
             color: #203354;
-            font-size: 2.4em;
+            font-size: 2.3em;
             letter-spacing: 1px;
             margin-top: 0;
         }
         .texto-superior {
             background: linear-gradient(90deg, #e3f2fd 10%, #fce4ec 100%);
-            padding: 24px 22px;
+            padding: 18px 20px;
             border-radius: 10px;
-            margin-bottom: 32px;
+            margin-bottom: 28px;
             font-size: 1.13em;
             color: #283747;
             box-shadow: 0 2px 10px #e2ecfa70;
         }
-        .img-container {
+        .img-list {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            gap: 30px;
+            flex-direction: column;
+            gap: 40px;
         }
-        .img-item {
-            background: #f9fafb;
-            border-radius: 11px;
-            box-shadow: 0 3px 18px rgba(87,94,120,0.15), 0 1px 2px rgba(0,0,0,0.06);
-            width: 295px;
-            margin-bottom: 10px;
-            padding: 16px 14px 14px 14px;
+        .img-block {
             display: flex;
             flex-direction: column;
             align-items: center;
-            transition: transform 0.18s;
-        }
-        .img-item:hover {
-            transform: translateY(-6px) scale(1.03);
-            box-shadow: 0 8px 28px #90caf9af;
-        }
-        .img-item img {
-            width: 100%;
-            border-radius: 6px;
-            border: 1.5px solid #bbdefb;
-            background: #fff;
         }
         .img-label {
-            font-size: 1.01em;
-            color: #31445b;
-            margin-top: 9px;
-            text-align: center;
-            font-weight: 500;
+            font-size: 1.16em;
+            color: #203354;
+            margin-bottom: 10px;
+            font-weight: 600;
+            letter-spacing: 0.8px;
+        }
+        .img-block img {
+            width: 95%;
+            max-width: 860px;
+            border-radius: 10px;
+            border: 2.5px solid #90caf9;
+            background: #fff;
+            box-shadow: 0 5px 18px rgba(90,114,175,0.12);
         }
         @media (max-width: 900px) {
             .main-container {
-                padding: 22px 5vw;
+                padding: 18px 4vw;
             }
-            .img-container {
-                gap: 16px;
-            }
-            .img-item {
-                width: 46vw;
-                min-width: 185px;
+            .img-block img {
+                width: 99%;
             }
         }
         @media (max-width: 600px) {
             .main-container {
-                padding: 10px 0;
+                padding: 2vw 0;
             }
-            .img-item {
-                width: 98vw;
-                min-width: 120px;
+            .img-block img {
+                width: 100%;
             }
         }
     </style>
@@ -96,75 +81,74 @@
         <h1>Práctica Terminales - Capturas de ejercicios</h1>
         <div class="texto-superior">
             <p>
-                Bienvenido/a. Aquí tienes todas las capturas realizadas para la práctica de terminales.<br>
-                Puedes agregar aquí instrucciones, observaciones o cualquier comentario explicativo sobre los ejercicios.<br>
-                <em>Consulta cada imagen para ver los pasos de instalación, conexiones y pruebas entre diferentes sistemas.</em>
+                Bienvenido/a. Abajo tienes todas las capturas para la práctica de terminales, ordenadas según los pasos del ejercicio.<br>
+                Añade aquí explicaciones, comentarios o instrucciones.
             </p>
         </div>
-        <div class="img-container">
-            <div class="img-item">
-              <img src="capturas/descargar-open-ssh.png" alt="Descargar OpenSSH">
-              <div class="img-label">1. Descargar OpenSSH</div>
+        <div class="img-list">
+            <div class="img-block">
+                <div class="img-label">1. Descargar OpenSSH</div>
+                <img src="capturas/descargar-open-ssh.png" alt="Descargar OpenSSH">
             </div>
-            <div class="img-item">
-              <img src="capturas/ssh-desde-otro-linux.png" alt="SSH desde otro Linux">
-              <div class="img-label">2. SSH desde otro Linux</div>
+            <div class="img-block">
+                <div class="img-label">2. SSH desde otro Linux</div>
+                <img src="capturas/ssh-desde-otro-linux.png" alt="SSH desde otro Linux">
             </div>
-            <div class="img-item">
-              <img src="capturas/entrar-sin-contraseña.png" alt="Entrar sin contraseña">
-              <div class="img-label">3. Entrar sin contraseña</div>
+            <div class="img-block">
+                <div class="img-label">3. Entrar sin contraseña</div>
+                <img src="capturas/entrar-sin-contraseña.png" alt="Entrar sin contraseña">
             </div>
-            <div class="img-item">
-              <img src="capturas/instalacion-putty.png" alt="Instalación Putty">
-              <div class="img-label">4. Instalación Putty</div>
+            <div class="img-block">
+                <div class="img-label">4. Instalación Putty</div>
+                <img src="capturas/instalacion-putty.png" alt="Instalación Putty">
             </div>
-            <div class="img-item">
-              <img src="capturas/conexion-putty.png" alt="Conexión Putty">
-              <div class="img-label">5. Conexión Putty</div>
+            <div class="img-block">
+                <div class="img-label">5. Conexión Putty</div>
+                <img src="capturas/conexion-putty.png" alt="Conexión Putty">
             </div>
-            <div class="img-item">
-              <img src="capturas/conexion-remmina.png" alt="Conexión Remmina">
-              <div class="img-label">6. Conexión Remmina</div>
+            <div class="img-block">
+                <div class="img-label">6. Conexión Remmina</div>
+                <img src="capturas/conexion-remmina.png" alt="Conexión Remmina">
             </div>
-            <div class="img-item">
-              <img src="capturas/conf-remmina.png" alt="Configuración Remmina">
-              <div class="img-label">7. Configuración Remmina</div>
+            <div class="img-block">
+                <div class="img-label">7. Configuración Remmina</div>
+                <img src="capturas/conf-remmina.png" alt="Configuración Remmina">
             </div>
-            <div class="img-item">
-              <img src="capturas/escritorio-remoto-contraseña.png" alt="Escritorio Remoto Contraseña">
-              <div class="img-label">8. Escritorio remoto contraseña</div>
+            <div class="img-block">
+                <div class="img-label">8. Escritorio remoto contraseña</div>
+                <img src="capturas/escritorio-remoto-contraseña.png" alt="Escritorio remoto contraseña">
             </div>
-            <div class="img-item">
-              <img src="capturas/escritorio-remoto-w.png" alt="Escritorio Remoto Windows">
-              <div class="img-label">9. Escritorio remoto Windows</div>
+            <div class="img-block">
+                <div class="img-label">9. Escritorio remoto Windows</div>
+                <img src="capturas/escritorio-remoto-w.png" alt="Escritorio remoto Windows">
             </div>
-            <div class="img-item">
-              <img src="capturas/Instalacion-team-viewer.png" alt="Instalación TeamViewer">
-              <div class="img-label">10. Instalación TeamViewer</div>
+            <div class="img-block">
+                <div class="img-label">10. Instalación TeamViewer</div>
+                <img src="capturas/Instalacion-team-viewer.png" alt="Instalación TeamViewer">
             </div>
-            <div class="img-item">
-              <img src="capturas/Windows-windows.png" alt="Windows a Windows">
-              <div class="img-label">11. Windows a Windows</div>
+            <div class="img-block">
+                <div class="img-label">11. Windows a Windows</div>
+                <img src="capturas/Windows-windows.png" alt="Windows a Windows">
             </div>
-            <div class="img-item">
-              <img src="capturas/Windows-linux.png" alt="Windows a Linux">
-              <div class="img-label">12. Windows a Linux</div>
+            <div class="img-block">
+                <div class="img-label">12. Windows a Linux</div>
+                <img src="capturas/Windows-linux.png" alt="Windows a Linux">
             </div>
-            <div class="img-item">
-              <img src="capturas/Linux-windows.png" alt="Linux a Windows">
-              <div class="img-label">13. Linux a Windows</div>
+            <div class="img-block">
+                <div class="img-label">13. Linux a Windows</div>
+                <img src="capturas/Linux-windows.png" alt="Linux a Windows">
             </div>
-            <div class="img-item">
-              <img src="capturas/Linux-linux.png" alt="Linux a Linux">
-              <div class="img-label">14. Linux a Linux</div>
+            <div class="img-block">
+                <div class="img-label">14. Linux a Linux</div>
+                <img src="capturas/Linux-linux.png" alt="Linux a Linux">
             </div>
-            <div class="img-item">
-              <img src="capturas/Telefono-linux.png" alt="Teléfono a Linux">
-              <div class="img-label">15. Teléfono a Linux</div>
+            <div class="img-block">
+                <div class="img-label">15. Teléfono a Linux</div>
+                <img src="capturas/Telefono-linux.png" alt="Teléfono a Linux">
             </div>
-            <div class="img-item">
-              <img src="capturas/Telefono-windows.png" alt="Teléfono a Windows">
-              <div class="img-label">16. Teléfono a Windows</div>
+            <div class="img-block">
+                <div class="img-label">16. Teléfono a Windows</div>
+                <img src="capturas/Telefono-windows.png" alt="Teléfono a Windows">
             </div>
         </div>
     </div>
