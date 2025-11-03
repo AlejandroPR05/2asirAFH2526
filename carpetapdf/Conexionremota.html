@@ -24,19 +24,23 @@
             letter-spacing: 1px;
             margin-top: 0;
         }
-        .texto-superior {
-            background: linear-gradient(90deg, #e3f2fd 10%, #fce4ec 100%);
-            padding: 18px 20px;
-            border-radius: 10px;
-            margin-bottom: 28px;
-            font-size: 1.13em;
-            color: #283747;
-            box-shadow: 0 2px 10px #e2ecfa70;
+        h2 {
+            margin-top: 40px;
+            color: #1565c0;
+            font-size: 1.25em;
+        }
+        .ejercicio-exp {
+            background: #E3F1FE;
+            border-radius: 8px;
+            padding: 16px 18px;
+            color: #32455e;
+            font-size: 1.06em;
+            margin-bottom: 26px;
         }
         .img-list {
             display: flex;
             flex-direction: column;
-            gap: 40px;
+            gap: 45px;
         }
         .img-block {
             display: flex;
@@ -44,11 +48,10 @@
             align-items: center;
         }
         .img-label {
-            font-size: 1.16em;
+            font-size: 1.08em;
             color: #203354;
             margin-bottom: 10px;
             font-weight: 600;
-            letter-spacing: 0.8px;
         }
         .img-block img {
             width: 95%;
@@ -58,97 +61,121 @@
             background: #fff;
             box-shadow: 0 5px 18px rgba(90,114,175,0.12);
         }
-        @media (max-width: 900px) {
-            .main-container {
-                padding: 18px 4vw;
-            }
-            .img-block img {
-                width: 99%;
-            }
-        }
-        @media (max-width: 600px) {
-            .main-container {
-                padding: 2vw 0;
-            }
-            .img-block img {
-                width: 100%;
-            }
+        .img-desc {
+            margin-top: 8px;
+            color: #48505a;
+            font-size: 0.99em;
+            text-align: center;
+            background: #f3f7fa;
+            border-radius: 7px;
+            padding: 6px 9px;
+            width: 90%;
+            max-width: 800px;
         }
     </style>
 </head>
 <body>
     <div class="main-container">
-        <h1>Práctica Terminales - Capturas de ejercicios</h1>
-        <div class="texto-superior">
-            <p>
-                Bienvenido/a. Abajo tienes todas las capturas para la práctica de terminales, ordenadas según los pasos del ejercicio.<br>
-                Añade aquí explicaciones, comentarios o instrucciones.
-            </p>
+        <h1>Práctica Terminales - Capturas de ejercicios - Alejandro Pascual Ramos</h1>
+
+        <h2>Ejercicio 1: SSH en Linux</h2>
+        <div class="ejercicio-exp">
+            Configuración del acceso remoto seguro a un sistema Linux mediante el servicio SSH y diferentes clientes para acceder desde otros equipos o sistemas.
         </div>
         <div class="img-list">
             <div class="img-block">
                 <div class="img-label">1. Descargar OpenSSH</div>
                 <img src="capturas/descargar-open-ssh.png" alt="Descargar OpenSSH">
+                <div class="img-desc">Instalando el paquete OpenSSH en el equipo Linux.</div>
             </div>
             <div class="img-block">
                 <div class="img-label">2. SSH desde otro Linux</div>
                 <img src="capturas/ssh-desde-otro-linux.png" alt="SSH desde otro Linux">
+                <div class="img-desc">Acceso remoto por terminal SSH desde una máquina Linux.</div>
             </div>
             <div class="img-block">
                 <div class="img-label">3. Entrar sin contraseña</div>
                 <img src="capturas/entrar-sin-contraseña.png" alt="Entrar sin contraseña">
+                <div class="img-desc">Configuración de clave pública para entrar por SSH sin poner contraseña.</div>
             </div>
             <div class="img-block">
                 <div class="img-label">4. Instalación Putty</div>
                 <img src="capturas/instalacion-putty.png" alt="Instalación Putty">
+                <div class="img-desc">Descarga e instalación del cliente Putty para Windows.</div>
             </div>
             <div class="img-block">
                 <div class="img-label">5. Conexión Putty</div>
                 <img src="capturas/conexion-putty.png" alt="Conexión Putty">
+                <div class="img-desc">Conexión SSH desde Windows usando Putty.</div>
             </div>
+        </div>
+
+        <h2>Ejercicio 2: Escritorio remoto (RDP)</h2>
+        <div class="ejercicio-exp">
+            Prueba y configuración de conexiones de escritorio remoto para acceder visualmente a un sistema Windows desde varios sistemas operativos.
+        </div>
+        <div class="img-list">
             <div class="img-block">
                 <div class="img-label">6. Conexión Remmina</div>
                 <img src="capturas/conexion-remmina.png" alt="Conexión Remmina">
+                <div class="img-desc">Inicio de sesión en escritorio remoto de Windows desde Linux usando Remmina.</div>
             </div>
             <div class="img-block">
                 <div class="img-label">7. Configuración Remmina</div>
                 <img src="capturas/conf-remmina.png" alt="Configuración Remmina">
+                <div class="img-desc">Configuración avanzada de Remmina para conexiones remotas.</div>
             </div>
             <div class="img-block">
                 <div class="img-label">8. Escritorio remoto contraseña</div>
                 <img src="capturas/escritorio-remoto-contraseña.png" alt="Escritorio remoto contraseña">
+                <div class="img-desc">Inicio de sesión mediante contraseña en escritorio remoto de Windows.</div>
             </div>
             <div class="img-block">
                 <div class="img-label">9. Escritorio remoto Windows</div>
                 <img src="capturas/escritorio-remoto-w.png" alt="Escritorio remoto Windows">
+                <div class="img-desc">Conexión establecida a escritorio remoto en Windows.</div>
             </div>
+        </div>
+
+        <h2>Ejercicio 3: TeamViewer y móvil</h2>
+        <div class="ejercicio-exp">
+            Instalación y uso de TeamViewer para realizar control remoto y presentaciones entre equipos o desde dispositivos móviles, tanto en Windows como en Linux.
+        </div>
+        <div class="img-list">
             <div class="img-block">
                 <div class="img-label">10. Instalación TeamViewer</div>
                 <img src="capturas/Instalacion-team-viewer.png" alt="Instalación TeamViewer">
+                <div class="img-desc">Instalando TeamViewer en el ordenador.</div>
             </div>
             <div class="img-block">
                 <div class="img-label">11. Windows a Windows</div>
                 <img src="capturas/Windows-windows.png" alt="Windows a Windows">
+                <div class="img-desc">Conexión remota usando TeamViewer entre dos Windows.</div>
             </div>
             <div class="img-block">
                 <div class="img-label">12. Windows a Linux</div>
                 <img src="capturas/Windows-linux.png" alt="Windows a Linux">
+                <div class="img-desc">Sesión de TeamViewer desde Windows a Linux.</div>
             </div>
             <div class="img-block">
                 <div class="img-label">13. Linux a Windows</div>
                 <img src="capturas/Linux-windows.png" alt="Linux a Windows">
+                <div class="img-desc">Acceso remoto desde Linux a Windows usando TeamViewer.</div>
             </div>
             <div class="img-block">
                 <div class="img-label">14. Linux a Linux</div>
                 <img src="capturas/Linux-linux.png" alt="Linux a Linux">
+                <div class="img-desc">Control remoto entre dos sistemas Linux.</div>
             </div>
             <div class="img-block">
                 <div class="img-label">15. Teléfono a Linux</div>
                 <img src="capturas/Telefono-linux.png" alt="Teléfono a Linux">
+                <div class="img-desc">Uso de TeamViewer para acceder desde móvil a Linux.</div>
             </div>
             <div class="img-block">
                 <div class="img-label">16. Teléfono a Windows</div>
                 <img src="capturas/Telefono-windows.png" alt="Teléfono a Windows">
+                <div class="img-desc">Acceso remoto desde móvil a un PC Windows con TeamViewer.</div>
             </div>
         </div>
     </div>
