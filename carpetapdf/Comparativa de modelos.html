@@ -1,1 +1,449 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Comparativa de modelos IA</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --bg-card: #111827;
+      --accent: #38bdf8;
+      --accent2: #22c55e;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --border: #1f2937;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #1d283a 0, #020617 55%);
+      color: var(--text);
+      padding: 24px;
+    }
+    h1 { text-align: center; margin-bottom: 6px; }
+    h2 { margin: 16px 0 10px; font-size: 20px; }
+    p  { max-width: 900px; margin: 0 auto 16px auto; color: var(--muted); font-size: 14px; }
+
+    .layout {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+      gap: 18px;
+    }
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+    }
+
+    .card {
+      background: linear-gradient(145deg, #020617 0, #020617 40%, #0b1220 100%);
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      padding: 16px 18px 18px;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.55);
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      font-size: 12px;
+      margin-top: 6px;
+    }
+    th, td {
+      border: 1px solid var(--border);
+      padding: 6px 8px;
+      text-align: center;
+    }
+    th {
+      background: rgba(15,23,42,0.9);
+      font-weight: 600;
+    }
+    tr:nth-child(even) td { background: rgba(15,23,42,0.6); }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 4px;
+      font-size: 13px;
+    }
+    .controls label {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    select {
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: #020617;
+      color: var(--text);
+      font-size: 13px;
+      outline: none;
+    }
+    select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px rgba(56,189,248,0.5);
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.9);
+      border: 1px solid var(--border);
+      font-size: 11px;
+      color: var(--muted);
+      margin-right: 4px;
+    }
+    .pill-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+    }
+    .pill-dot.win { background: var(--accent2); }
+    .pill-dot.mac { background: var(--accent); }
+
+    .chart-container { width: 100%; height: 320px; }
+  </style>
+</head>
+<body>
+  <h1>Comparativa de modelos de IA</h1>
+
+  <h2 style="text-align:center;margin-top:4px;">Acertijos y objetivos de evaluación</h2>
+  <p>
+    Para comparar los modelos se han usado seis acertijos clásicos, cubriendo razonamiento
+    físico/causal, secuencial, atención al contexto, razonamiento posicional, cálculo
+    sencillo y sentido común ante trampas.
+  </p>
+
+  <div class="card" style="max-width:1100px;margin:0 auto 18px auto;">
+    <h2>Listado de acertijos</h2>
+
+    <p><strong>1. La lógica de los interruptores (razonamiento físico/causal)</strong><br>
+      Tres interruptores controlan tres bombillas en una habitación a la que solo se puede
+      entrar una vez; hay que identificar qué interruptor enciende cada bombilla usando luz y
+      calor.
+    </p>
+
+    <p><strong>2. El problema del río y los animales (lógica secuencial / restricciones)</strong><br>
+      Un granjero debe cruzar un río con un lobo, una cabra y una lechuga con una barca para
+      uno más un objeto, sin dejar juntas combinaciones peligrosas.
+    </p>
+
+    <p><strong>3. El padre de Juan (atención al contexto inmediato)</strong><br>
+      “El padre de Juan tiene cuatro hijos: Enero, Febrero, Marzo y… ¿cómo se llama el cuarto
+      hijo?”. Mide si el modelo se fija en que el cuarto es Juan.
+    </p>
+
+    <p><strong>4. La carrera (razonamiento posicional)</strong><br>
+      “Estás corriendo una carrera y adelantas al que va en segundo lugar, ¿en qué posición
+      quedas?”. La respuesta correcta es segundo.
+    </p>
+
+    <p><strong>5. El bate y la pelota (razonamiento matemático simple)</strong><br>
+      Bate y pelota cuestan 1,10 € en total y el bate cuesta 1 € más que la pelota; la
+      respuesta correcta para la pelota es 0,05 €.
+    </p>
+
+    <p><strong>6. Supervivencia en el desierto (lógica pragmática / sentido común)</strong><br>
+      Hay una botella de agua y otra de veneno idénticas; un químico dice que mezclarlas
+      neutraliza el veneno pero la mezcla sabe horrible. Se espera que el modelo priorice la
+      botella de agua y la prudencia.
+    </p>
+
+    <p>
+      Estos seis acertijos forman un pequeño benchmark cualitativo que combina rapidez
+      (tk/s), coste relativo y calidad de respuesta en Windows y Mac.
+    </p>
+  </div>
+
+  <p>
+    Se comparan cuatro modelos (Gemma‑3‑12B, DeepSeek‑8B, LiquidLF‑2‑1.2B y Qwen3‑VL‑4B)
+    resolviendo los seis acertijos; se han medido tk/s, tokens generados y aciertos en
+    Windows (.txt) y Mac (PDF).
+  </p>
+
+  <div class="layout">
+    <div class="card">
+      <h2>Resumen numérico</h2>
+      <span class="pill"><span class="pill-dot win"></span>Windows</span>
+      <span class="pill"><span class="pill-dot mac"></span>Mac</span>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Modelo</th>
+            <th>tk/s Win</th>
+            <th>tk/s Mac</th>
+            <th>Tokens Win</th>
+            <th>Tokens Mac</th>
+            <th>Aciertos Win (6)</th>
+            <th>Aciertos Mac (6)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Gemma‑3‑12B</td>
+            <td>40</td>
+            <td>14</td>
+            <td>1317</td>
+            <td>1285</td>
+            <td>6</td>
+            <td>6</td>
+          </tr>
+          <tr>
+            <td>DeepSeek‑8B</td>
+            <td>69</td>
+            <td>11</td>
+            <td>5900</td>
+            <td>5300</td>
+            <td>5</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td>LiquidLF‑2‑1.2B</td>
+            <td>207</td>
+            <td>205</td>
+            <td>870</td>
+            <td>860</td>
+            <td>4</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td>Qwen3‑VL‑4B</td>
+            <td>111</td>
+            <td>100</td>
+            <td>3100</td>
+            <td>3000</td>
+            <td>5</td>
+            <td>5</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Parámetros de prueba</h2>
+      <div class="controls">
+        <label>
+          Longitud de prompt
+          <select id="promptSelect">
+            <option value="corto">Corto (&lt; 100 tokens)</option>
+            <option value="medio" selected>Medio (100‑300)</option>
+            <option value="largo">Largo (&gt; 300)</option>
+          </select>
+        </label>
+        <label>
+          Tamaño de contexto
+          <select id="contextSelect">
+            <option value="corto">Corto</option>
+            <option value="medio" selected>Medio</option>
+            <option value="largo">Largo</option>
+          </select>
+        </label>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Velocidad tk/s Windows vs Mac</h2>
+      <div id="chart_tks" class="chart-container"></div>
+
+      <h2 style="margin-top:18px;">Aciertos por sistema</h2>
+      <div id="chart_aciertos" class="chart-container"></div>
+    </div>
+  </div>
+
+  <div class="card" style="max-width:1100px;margin:18px auto 0 auto;">
+    <h2>Coste relativo vs calidad (Windows)</h2>
+    <p>
+      Como proxy de coste se usa un valor relativo por mil tokens y los tokens generados por
+      cada modelo en Windows; en el eje vertical se muestran los aciertos (0‑6).
+    </p>
+    <div id="chart_coste_win" class="chart-container"></div>
+
+    <h2 style="margin-top:24px;">Coste relativo vs calidad (Mac)</h2>
+    <p>
+      Se representa el mismo coste relativo pero utilizando los tokens generados en Mac y los
+      aciertos obtenidos en ese sistema.
+    </p>
+    <div id="chart_coste_mac" class="chart-container"></div>
+  </div>
+
+  <!-- Conclusión -->
+  <div class="card" style="max-width:1100px;margin:18px auto 0 auto;">
+    <h2>Conclusión</h2>
+    <p>
+      La comparativa muestra que los cuatro modelos resuelven bien la mayoría de los
+      acertijos, pero con perfiles distintos de velocidad, coste relativo y precisión.
+      Gemma‑3‑12B se comporta como el modelo más equilibrado: acierta todos los retos en
+      ambos sistemas con una velocidad razonable y un consumo de tokens moderado, mientras
+      que LiquidLF‑2‑1.2B prioriza la velocidad a costa de más fallos.
+    </p>
+    <p>
+      DeepSeek‑8B y Qwen3‑VL‑4B quedan en un punto intermedio: obtienen casi todos los
+      aciertos, pero con más tokens y, por tanto, un coste simulado mayor que Gemma.
+      Comparando Windows y Mac, el patrón de aciertos se mantiene prácticamente igual, lo que
+      indica que los errores dependen del modelo y no del sistema operativo, aunque la
+      velocidad en tk/s sí se ve afectada por las diferencias de hardware. En conjunto, el
+      benchmark ayuda a entender qué modelo conviene elegir según se priorice rapidez,
+      coste o fiabilidad en las respuestas.
+    </p>
+  </div>
+
+  <!-- Plotly y script -->
+  <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
+  <script>
+    const modelos = [
+      { nombre: "Gemma-3-12B",     tksWin: 40,  tksMac: 14,  tokWin: 1317, tokMac: 1285, acWin: 6, acMac: 6, costePTK: 3.0 },
+      { nombre: "DeepSeek-8B",     tksWin: 69,  tksMac: 11,  tokWin: 5900, tokMac: 5300, acWin: 5, acMac: 5, costePTK: 2.0 },
+      { nombre: "LiquidLF-2-1.2B", tksWin: 207, tksMac: 205, tokWin: 870,  tokMac: 860,  acWin: 4, acMac: 4, costePTK: 0.5 },
+      { nombre: "Qwen3-VL-4B",     tksWin: 111, tksMac: 100, tokWin: 3100, tokMac: 3000, acWin: 5, acMac: 5, costePTK: 1.2 }
+    ];
+
+    const factorPrompt   = { corto: 1.1, medio: 1.0, largo: 0.8 };
+    const factorContexto = { corto: 1.1, medio: 1.0, largo: 0.7 };
+
+    function drawTkChart(promptLen, ctxLen) {
+      const f = factorPrompt[promptLen] * factorContexto[ctxLen];
+      const nombres = modelos.map(m => m.nombre);
+      const win = modelos.map(m => +(m.tksWin * f).toFixed(1));
+      const mac = modelos.map(m => +(m.tksMac * f).toFixed(1));
+
+      const traceWin = {
+        x: nombres, y: win, name: "Windows", type: "bar",
+        marker: { color: "#22c55e" },
+        hovertemplate: "<b>%{x}</b><br>Windows: %{y} tk/s<extra></extra>"
+      };
+      const traceMac = {
+        x: nombres, y: mac, name: "Mac", type: "bar",
+        marker: { color: "#38bdf8" },
+        hovertemplate: "<b>%{x}</b><br>Mac: %{y} tk/s<extra></extra>"
+      };
+
+      const layout = {
+        barmode: "group",
+        plot_bgcolor: "rgba(15,23,42,0)",
+        paper_bgcolor: "rgba(0,0,0,0)",
+        font: { color: "#e5e7eb" },
+        margin: { t: 10, r: 10, l: 40, b: 45 },
+        yaxis: { title: "tk/s (ajustado)", gridcolor: "#1f2937" },
+        xaxis: { tickangle: -20 }
+      };
+
+      Plotly.newPlot("chart_tks", [traceWin, traceMac], layout, {responsive: true});
+    }
+
+    function drawAciertosChart() {
+      const nombres = modelos.map(m => m.nombre);
+      const win = modelos.map(m => m.acWin);
+      const mac = modelos.map(m => m.acMac);
+
+      const traceW = {
+        x: nombres, y: win, name: "Windows", type: "bar",
+        marker: { color: "rgba(34,197,94,0.9)" },
+        hovertemplate: "<b>%{x}</b><br>Aciertos Windows: %{y}/6<extra></extra>"
+      };
+      const traceM = {
+        x: nombres, y: mac, name: "Mac", type: "bar",
+        marker: { color: "rgba(56,189,248,0.9)" },
+        hovertemplate: "<b>%{x}</b><br>Aciertos Mac: %{y}/6<extra></extra>"
+      };
+
+      const layout = {
+        barmode: "group",
+        plot_bgcolor: "rgba(15,23,42,0)",
+        paper_bgcolor: "rgba(0,0,0,0)",
+        font: { color: "#e5e7eb" },
+        margin: { t: 10, r: 10, l: 40, b: 45 },
+        yaxis: { title: "Número de aciertos", gridcolor: "#1f2937", dtick: 1 },
+        xaxis: { tickangle: -20 }
+      };
+
+      Plotly.newPlot("chart_aciertos", [traceW, traceM], layout, {responsive: true});
+    }
+
+    function drawCostChartWin(promptLen, ctxLen) {
+      const f = factorPrompt[promptLen] * factorContexto[ctxLen];
+      const xCoste = modelos.map(m =>
+        +(m.costePTK * (m.tokWin / 1000) * (1 / f)).toFixed(2)
+      );
+      const yAciertos = modelos.map(m => m.acWin);
+      const nombres = modelos.map(m => m.nombre);
+
+      const trace = {
+        x: xCoste, y: yAciertos, text: nombres,
+        mode: "markers+text", textposition: "top center",
+        marker: {
+          size: modelos.map(m => 8 + (m.tokWin / 800)),
+          color: "#a855f7"
+        },
+        hovertemplate:
+          "<b>%{text}</b><br>Coste relativo: %{x}<br>Aciertos Win: %{y}/6<extra></extra>"
+      };
+
+      const layout = {
+        plot_bgcolor: "rgba(15,23,42,0)",
+        paper_bgcolor: "rgba(0,0,0,0)",
+        font: { color: "#e5e7eb" },
+        margin: { t: 10, r: 10, l: 50, b: 50 },
+        xaxis: { title: "Coste relativo (ptk × tokens / factor)", gridcolor: "#1f2937" },
+        yaxis: { title: "Aciertos (Windows)", gridcolor: "#1f2937", dtick: 1 }
+      };
+
+      Plotly.newPlot("chart_coste_win", [trace], layout, {responsive: true});
+    }
+
+    function drawCostChartMac(promptLen, ctxLen) {
+      const f = factorPrompt[promptLen] * factorContexto[ctxLen];
+      const xCoste = modelos.map(m =>
+        +(m.costePTK * (m.tokMac / 1000) * (1 / f)).toFixed(2)
+      );
+      const yAciertos = modelos.map(m => m.acMac);
+      const nombres = modelos.map(m => m.nombre);
+
+      const trace = {
+        x: xCoste, y: yAciertos, text: nombres,
+        mode: "markers+text", textposition: "top center",
+        marker: {
+          size: modelos.map(m => 8 + (m.tokMac / 800)),
+          color: "#ec4899"
+        },
+        hovertemplate:
+          "<b>%{text}</b><br>Coste relativo: %{x}<br>Aciertos Mac: %{y}/6<extra></extra>"
+      };
+
+      const layout = {
+        plot_bgcolor: "rgba(15,23,42,0)",
+        paper_bgcolor: "rgba(0,0,0,0)",
+        font: { color: "#e5e7eb" },
+        margin: { t: 10, r: 10, l: 50, b: 50 },
+        xaxis: { title: "Coste relativo (ptk × tokens / factor)", gridcolor: "#1f2937" },
+        yaxis: { title: "Aciertos (Mac)", gridcolor: "#1f2937", dtick: 1 }
+      };
+
+      Plotly.newPlot("chart_coste_mac", [trace], layout, {responsive: true});
+    }
+
+    const promptSelect  = document.getElementById("promptSelect");
+    const contextSelect = document.getElementById("contextSelect");
+
+    function actualizar() {
+      const p = promptSelect.value;
+      const c = contextSelect.value;
+      drawTkChart(p, c);
+      drawAciertosChart();
+      drawCostChartWin(p, c);
+      drawCostChartMac(p, c);
+    }
+
+    promptSelect.addEventListener("change", actualizar);
+    contextSelect.addEventListener("change", actualizar);
+
+    actualizar();
+  </script>
+</body>
+</html>
 
