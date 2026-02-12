@@ -1,1 +1,386 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <title>Manual de Destilación de IA</title>
+    <style>
+        :root {
+            --bg: #020617;
+            --card: #020617;
+            --accent: #38bdf8;
+            --accent-soft: rgba(56,189,248,0.12);
+            --text-main: #e5e7eb;
+            --text-soft: #9ca3af;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: radial-gradient(circle at top, #1e293b 0, #020617 60%, #000 100%);
+            color: var(--text-main);
+        }
+
+        header {
+            padding: 2.5rem 1.5rem 1.5rem;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.2rem;
+            letter-spacing: 0.05em;
+        }
+
+        header p {
+            margin: 0.5rem 0 0;
+            color: var(--text-soft);
+        }
+
+        .badge {
+            display: inline-block;
+            font-size: 0.8rem;
+            padding: 0.15rem 0.6rem;
+            border-radius: 999px;
+            background-color: var(--accent-soft);
+            color: var(--accent);
+            border: 1px solid rgba(56,189,248,0.4);
+            margin-bottom: 0.5rem;
+        }
+
+        main {
+            max-width: 900px;
+            margin: 0 auto 3rem;
+            padding: 0 1.5rem 2rem;
+        }
+
+        .card {
+            background: linear-gradient(135deg, rgba(15,23,42,0.98), rgba(15,23,42,0.92));
+            border-radius: 18px;
+            padding: 1.5rem 1.75rem;
+            border: 1px solid rgba(148,163,184,0.25);
+            box-shadow:
+                0 18px 45px rgba(15,23,42,0.8),
+                0 0 0 1px rgba(15,23,42,0.7) inset;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            margin-top: 0;
+            margin-bottom: 0.75rem;
+            font-size: 1.3rem;
+            color: #f9fafb;
+        }
+
+        h3 {
+            margin-top: 1rem;
+            margin-bottom: 0.4rem;
+            font-size: 1.05rem;
+            color: #e5e7eb;
+        }
+
+        p {
+            margin: 0.25rem 0 0.6rem;
+            color: var(--text-soft);
+            line-height: 1.55;
+        }
+
+        pre {
+            margin: 0.5rem 0 0.75rem;
+            padding: 0.75rem 0.9rem;
+            background: #020617;
+            border-radius: 10px;
+            overflow-x: auto;
+            border: 1px solid rgba(30,64,175,0.8);
+            font-size: 0.85rem;
+            color: #e5e7eb;
+        }
+
+        code {
+            font-family: Consolas, "Fira Code", ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+        }
+
+        .nota {
+            margin: 0.4rem 0 0.7rem;
+            padding: 0.5rem 0.7rem;
+            border-radius: 10px;
+            background: rgba(250,204,21,0.06);
+            border: 1px solid rgba(250,204,21,0.6);
+            font-size: 0.9rem;
+            color: #facc15;
+        }
+
+        .nota strong { color: #fde68a; }
+
+        .image-slot {
+            background: radial-gradient(circle at top, #1e293b 0, #020617 60%);
+            border-radius: 16px;
+            padding: 0.9rem;
+            border: 1px dashed rgba(148,163,184,0.6);
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .image-slot img {
+            margin-top: 0.6rem;
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 12px 30px rgba(15,23,42,0.85);
+        }
+
+        footer {
+            text-align: center;
+            padding: 1rem 1.5rem 2rem;
+            font-size: 0.8rem;
+            color: #6b7280;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <span class="badge">Curso IA · Destilación de Conocimiento</span>
+    <h1>Manual para Destilar un Modelo de IA</h1>
+    <p>De un modelo profesor grande a un modelo estudiante pequeño y eficiente.</p>
+</header>
+
+<main>
+    <!-- 1. Introducción -->
+    <section class="card" id="introduccion">
+        <h2>1. Idea general de la destilación</h2>
+        <p>
+            La <strong>destilación de conocimiento</strong> consiste en entrenar un modelo pequeño (estudiante)
+            para que imite el comportamiento de un modelo grande (profesor), utilizando las salidas del profesor
+            como señal de entrenamiento adicional. [file:94]
+        </p>
+        <p>
+            El estudiante no solo aprende la etiqueta correcta (por ejemplo, positivo o negativo), sino también
+            la distribución de probabilidad que el profesor asigna a cada clase, capturando su <em>conocimiento oscuro</em>
+            y sus matices. [file:94]
+        </p>
+    </section>
+
+    <!-- 2. Imagen de la práctica (tu captura) -->
+    <section class="card">
+        <h2>2. Captura del entrenamiento de la destilación</h2>
+        <p>
+            A continuación se muestra una imagen real del entrenamiento del modelo estudiante
+            ejecutándose en mi equipo (entrenamiento en CPU durante la destilación del modelo grande
+            al modelo pequeño).
+        </p>
+        <div class="image-slot">
+            <!-- Usa exactamente el archivo que has subido: foto-destilacion.jpg -->
+            <img src="capturas/foto destilacion.png"
+                 alt="Captura del entrenamiento de destilación en CPU" />
+        </div>
+    </section>
+
+    <!-- 3. Pasos para la destilación -->
+    <section class="card" id="pasos">
+        <h2>3. Pasos para realizar la destilación</h2>
+
+        <h3>3.1 Preparar entorno y librerías</h3>
+        <p>Primero creamos un entorno virtual de Python e instalamos las librerías necesarias.</p>
+        <pre><code># Crear y activar entorno (Windows)
+python -m venv venv
+venv\Scripts\activate
+
+# Instalar dependencias principales
+pip install transformers datasets torch scikit-learn</code></pre>
+
+        <h3>3.2 Cargar modelos, tokenizador y dataset</h3>
+        <p>
+            El profesor será un modelo ya entrenado para análisis de sentimiento (DistilBERT) y 
+            el estudiante un BERT‑tiny mucho más pequeño. Usamos el mismo tipo de tokenización para ambos. [file:94]
+        </p>
+        <pre><code>import torch
+from datasets import load_dataset
+from transformers import (
+    AutoTokenizer,
+    AutoModelForSequenceClassification,
+    TrainingArguments,
+    Trainer,
+)
+
+teacher_id = "distilbert-base-uncased-finetuned-sst-2-english"
+student_id = "prajjwal1/bert-tiny"
+
+teacher_model = AutoModelForSequenceClassification.from_pretrained(teacher_id)
+student_model = AutoModelForSequenceClassification.from_pretrained(
+    student_id,
+    num_labels=2,  # positivo / negativo
+)
+
+tokenizer = AutoTokenizer.from_pretrained(student_id)
+
+dataset = load_dataset("sst2")
+
+def tokenize_data(examples):
+    return tokenizer(
+        examples["sentence"],
+        truncation=True,
+        padding="max_length",
+    )
+
+tokenized_dataset = dataset.map(tokenize_data, batched=True)
+tokenized_dataset = tokenized_dataset.rename_column("label", "labels")</code></pre>
+
+        <h3>3.3 Entrenador con destilación (incluyendo divergencia KL)</h3>
+        <p>
+            La clave está en la función de pérdida: combinamos la pérdida del estudiante con una
+            <strong>pérdida de destilación</strong> basada en la divergencia KL entre las salidas del profesor y las del estudiante. [file:94]
+        </p>
+        <pre><code>import torch.nn.functional as F
+
+class DistillationTrainer(Trainer):
+    def __init__(self, *args, teacher_model=None, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.teacher_model = teacher_model
+        self.teacher_model.to(self.args.device)
+        self.teacher_model.eval()
+
+    def compute_loss(self, model, inputs, return_outputs=False):
+        # Estudiante
+        outputs_student = model(**inputs)
+        loss_student = outputs_student.loss
+
+        # Profesor (sin gradiente)
+        with torch.no_grad():
+            outputs_teacher = self.teacher_model(**inputs)
+
+        temperature = 2.0
+        s_logits = outputs_student.logits / temperature
+        t_logits = outputs_teacher.logits / temperature
+
+        loss_kl = F.kl_div(
+            input=F.log_softmax(s_logits, dim=-1),
+            target=F.softmax(t_logits, dim=-1),
+            reduction="batchmean",
+        ) * (temperature ** 2)
+
+        # Combinación de pérdidas
+        loss = 0.2 * loss_student + 0.8 * loss_kl
+        return (loss, outputs_student) if return_outputs else loss</code></pre>
+
+        <div class="nota">
+            <strong>Nota importante:</strong> la divergencia KL solo es válida si profesor y estudiante
+            usan el mismo tokenizador (por ejemplo, de Qwen 20B a Qwen 8B, o DistilBERT a BERT‑tiny
+            con vocabulario compatible).
+        </div>
+
+        <h3>3.4 Lanzar el entrenamiento (destilación)</h3>
+        <pre><code>from sklearn.metrics import accuracy_score, f1_score
+
+def compute_metrics(pred):
+    labels = pred.label_ids
+    preds = pred.predictions.argmax(-1)
+    acc = accuracy_score(labels, preds)
+    f1 = f1_score(labels, preds, average="weighted")
+    return {"accuracy": acc, "f1": f1}
+
+training_args = TrainingArguments(
+    output_dir="distilled_model",
+    num_train_epochs=3,
+    per_device_train_batch_size=32,
+    per_device_eval_batch_size=32,
+    weight_decay=0.01,
+    evaluation_strategy="epoch",
+    logging_steps=100,
+    push_to_hub=False,
+)
+
+trainer = DistillationTrainer(
+    model=student_model,
+    args=training_args,
+    train_dataset=tokenized_dataset["train"],
+    eval_dataset=tokenized_dataset["validation"],
+    tokenizer=tokenizer,
+    compute_metrics=compute_metrics,
+    teacher_model=teacher_model,
+)
+
+print("Iniciando la destilación...")
+trainer.train()</code></pre>
+    </section>
+
+    <!-- 4. Medir divergencia KL -->
+    <section class="card" id="kl">
+        <h2>4. Medir la divergencia KL entre profesor y estudiante</h2>
+        <p>
+            Para comprobar que el modelo pequeño realmente ha sido destilado del grande,
+            medimos la <strong>divergencia KL</strong> entre sus distribuciones de salida sobre un
+            conjunto de frases de prueba. Un valor de KL bajo significa que ambos modelos 
+            se comportan de forma muy similar. [file:94]
+        </p>
+        <pre><code>import torch
+import torch.nn.functional as F
+
+def medir_kl(teacher_model, student_model, tokenizer, textos):
+    teacher_model.eval()
+    student_model.eval()
+    total_kl = 0.0
+    n = 0
+
+    for texto in textos:
+        inputs = tokenizer(
+            texto,
+            return_tensors="pt",
+            truncation=True,
+            padding="max_length",
+        )
+
+        with torch.no_grad():
+            out_teacher = teacher_model(**inputs)
+            out_student = student_model(**inputs)
+
+        p_teacher = F.softmax(out_teacher.logits, dim=-1)
+        log_p_student = F.log_softmax(out_student.logits, dim=-1)
+
+        kl = F.kl_div(
+            log_p_student,
+            p_teacher,
+            reduction="batchmean",
+        )
+
+        total_kl += kl.item()
+        n += 1
+
+    return total_kl / max(n, 1)
+
+# Ejemplo de uso
+textos_prueba = [
+    "This movie was amazing!",
+    "I hated this film, it was terrible.",
+    "The plot was okay but the acting was great.",
+]
+
+kl_media = medir_kl(teacher_model, student_model, tokenizer, textos_prueba)
+print("Divergencia KL media:", kl_media)</code></pre>
+    </section>
+
+    <!-- 5. Comparación final -->
+    <section class="card">
+        <h2>5. Comparación final Profesor vs Estudiante</h2>
+        <pre><code>teacher_params = teacher_model.num_parameters() / 1_000_000
+student_params = student_model.num_parameters() / 1_000_000
+
+print("\n--- Comparación Final ---")
+print(f"Parámetros del Profesor:   {teacher_params:.2f}M")
+print(f"Parámetros del Estudiante: {student_params:.2f}M")
+print(f"Reducción de tamaño:       {teacher_params / student_params:.1f}x")</code></pre>
+        <p>
+            Con estos datos puedes completar la memoria de la práctica indicando:
+            tamaño de cada modelo, reducción de parámetros, precisión (accuracy / F1) 
+            y divergencia KL media, mostrando que el estudiante es mucho más ligero 
+            pero mantiene un rendimiento cercano al profesor. [file:94]
+        </p>
+    </section>
+</main>
+
+<footer>
+    Manual HTML realizado como guía para la práctica de destilación de IA y medición de divergencia KL.
+</footer>
+</body>
+</html>
 
