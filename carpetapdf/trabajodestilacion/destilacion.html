@@ -152,12 +152,12 @@
         <p>
             La <strong>destilación de conocimiento</strong> consiste en entrenar un modelo pequeño (estudiante)
             para que imite el comportamiento de un modelo grande (profesor), utilizando las salidas del profesor
-            como señal de entrenamiento adicional. [file:94]
+            como señal de entrenamiento adicional.
         </p>
         <p>
             El estudiante no solo aprende la etiqueta correcta (por ejemplo, positivo o negativo), sino también
             la distribución de probabilidad que el profesor asigna a cada clase, capturando su <em>conocimiento oscuro</em>
-            y sus matices. [file:94]
+            y sus matices.
         </p>
     </section>
 
@@ -192,7 +192,7 @@ pip install transformers datasets torch scikit-learn</code></pre>
         <h3>3.2 Cargar modelos, tokenizador y dataset</h3>
         <p>
             El profesor será un modelo ya entrenado para análisis de sentimiento (DistilBERT) y 
-            el estudiante un BERT‑tiny mucho más pequeño. Usamos el mismo tipo de tokenización para ambos. [file:94]
+            el estudiante un BERT‑tiny mucho más pequeño. Usamos el mismo tipo de tokenización para ambos.
         </p>
         <pre><code>import torch
 from datasets import load_dataset
@@ -229,7 +229,7 @@ tokenized_dataset = tokenized_dataset.rename_column("label", "labels")</code></p
         <h3>3.3 Entrenador con destilación (incluyendo divergencia KL)</h3>
         <p>
             La clave está en la función de pérdida: combinamos la pérdida del estudiante con una
-            <strong>pérdida de destilación</strong> basada en la divergencia KL entre las salidas del profesor y las del estudiante. [file:94]
+            <strong>pérdida de destilación</strong> basada en la divergencia KL entre las salidas del profesor y las del estudiante. 
         </p>
         <pre><code>import torch.nn.functional as F
 
@@ -373,7 +373,7 @@ print(f"Reducción de tamaño:       {teacher_params / student_params:.1f}x")</c
             Con estos datos puedes completar la memoria de la práctica indicando:
             tamaño de cada modelo, reducción de parámetros, precisión (accuracy / F1) 
             y divergencia KL media, mostrando que el estudiante es mucho más ligero 
-            pero mantiene un rendimiento cercano al profesor. [file:94]
+            pero mantiene un rendimiento cercano al profesor.
         </p>
     </section>
 </main>
