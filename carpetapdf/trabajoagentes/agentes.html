@@ -1,1 +1,247 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 PRÁCTICA AGENTES IA LOCAL - Manual Windows 11</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap');
+        
+        * { box-sizing: border-box; }
+        body { 
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0f0f23; 
+            color: #e8e8ff !important;
+            line-height: 1.7;
+            margin: 0;
+            padding: 0;
+        }
+        .markdown-body { 
+            max-width: 950px; 
+            margin: 0 auto; 
+            padding: 60px 30px; 
+            background: rgba(15,15,35,0.95);
+        }
+        .header-dark { 
+            text-align: center; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 50px 30px; 
+            border-radius: 20px; 
+            margin-bottom: 50px;
+            box-shadow: 0 25px 50px rgba(102,126,234,0.3);
+        }
+        h1 { 
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 3em; 
+            font-weight: 700; 
+            margin: 0 0 15px 0;
+            color: #ffffff !important;
+            text-shadow: 0 0 30px rgba(255,255,255,0.5);
+        }
+        .w11-pro { 
+            background: rgba(255,255,255,0.2); 
+            border: 2px solid rgba(255,255,255,0.3);
+            padding: 12px 30px; 
+            border-radius: 50px; 
+            font-weight: 600; 
+            display: inline-block;
+            color: #ffffff !important;
+            backdrop-filter: blur(10px);
+        }
+        .card-tech { 
+            background: rgba(20,20,40,0.9); 
+            border: 1px solid #444;
+            border-radius: 20px; 
+            padding: 35px; 
+            margin-bottom: 35px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+        h2 { 
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.8em; 
+            color: #a8ff60 !important;
+            margin-bottom: 25px;
+            display: flex; align-items: center;
+        }
+        h3 { 
+            color: #ff6b9d !important;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        p, li, ul, ol { 
+            color: #d4d4ff !important;
+        }
+        pre, code { 
+            background: #1a1a2e !important; 
+            border: 1px solid #555;
+            border-radius: 12px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.95em;
+            color: #e8e8ff !important;
+        }
+        .screenshot-placeholder {
+            width: 100%; 
+            height: 400px; 
+            background: linear-gradient(45deg, #2a2a4a, #1a1a3a);
+            border: 3px dashed #a8ff60;
+            border-radius: 15px;
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            color: #a8ff60 !important;
+            font-size: 1.3em;
+            font-weight: 500;
+            margin: 30px 0;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .features-grid {
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px; 
+            margin: 30px 0;
+        }
+        .feature-card {
+            background: rgba(40,40,60,0.8);
+            padding: 25px; 
+            border-radius: 15px;
+            border: 1px solid rgba(168,255,96,0.4);
+            color: #d4d4ff !important;
+        }
+        .feature-card h3 {
+            color: #a8ff60 !important;
+        }
+        footer { 
+            text-align: center; 
+            padding: 40px; 
+            background: rgba(20,20,40,0.9);
+            border-radius: 20px; 
+            margin-top: 50px;
+            border-top: 2px solid #a8ff60;
+            color: #ffffff !important;
+        }
+        a { 
+            color: #ff6b9d !important;
+            text-decoration: none;
+        }
+        a:hover { 
+            text-shadow: 0 0 10px #ff6b9d;
+        }
+        strong { 
+            color: #ffffff !important;
+        }
+        .practice-badge {
+            background: linear-gradient(45deg, #a8ff60, #4ade80);
+            color: #0f0f23 !important;
+            padding: 8px 25px;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 1.1em;
+            display: inline-block;
+            margin: 10px 0;
+            box-shadow: 0 5px 20px rgba(168,255,96,0.4);
+        }
+        @media (max-width: 768px) {
+            .markdown-body { padding: 30px 20px; }
+            h1 { font-size: 2.2em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="markdown-body">
+        <div class="header-dark">
+            <h1>🤖 PRÁCTICA AGENTES IA LOCAL</h1>
+            <div style="margin: 15px 0;">
+                <span class="practice-badge">PRACTICA ASIR - AGENTES IA</span>
+            </div>
+            <div class="w11-pro">Windows 11 Pro | GPU NVIDIA | Ollama + OpenCode</div>
+            <p style="color: #e0e0ff !important; margin-top: 20px;">Manual Técnico Completo • 15 Enero 2026</p>
+        </div>
+
+        <div class="card-tech">
+            <h2>📋 Requisitos Windows 11</h2>
+            <ul style="font-size: 1.1em;">
+                <li>🖥️ <strong>Windows 11 Pro/Home</strong> (build 23H2+)</li>
+                <li>💻 <strong>GPU NVIDIA RTX 30/40</strong> (12GB+ VRAM)</li>
+                <li>⚙️ <strong>CUDA 12.1+</strong> (NVIDIA Studio Drivers)</li>
+                <li>📦 <strong>Node.js 20.x</strong> (instalador oficial MSI)</li>
+                <li>💾 <strong>30GB SSD</strong> libres para modelos</li>
+            </ul>
+        </div>
+
+        <div class="card-tech">
+            <h2>🔧 Fase 1: Ollama Setup W11</h2>
+            <ol style="font-size: 1.05em;">
+                <li><strong>Descarga:</strong> <code>OllamaSetup.exe</code> → Ejecutar como Admin</li>
+                <li><strong>PowerShell (Admin):</strong> <pre>ollama run gpt-oss:20b</pre></li>
+                <li><strong>Test conexión:</strong> <code>http://192.168.7.114:11434/v1</code></li>
+            </ol>
+            <div class="screenshot-placeholder">
+                📸 COLOCA AQUÍ IMAGEN 1: Captura-de-pantalla-2026-01-23-170946.jpg<br>
+                <small>(Monitoreo GPU/CPU Windows 11)</small>
+            </div>
+        </div>
+
+        <div class="card-tech">
+            <h2>🎯 Fase 2: OpenCode Config</h2>
+            <ol style="font-size: 1.05em;">
+                <li>PowerShell: <pre>npm install -g @opencode/cli</pre></li>
+                <li>Crear: <code>C:\Users\%USERNAME%\.config\opencode\opencode.json</code></li>
+                <li><strong>Config JSON oficial:</strong><pre>{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "ollama": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Ollama (local)",
+      "options": {
+        "baseURL": "http://192.168.7.114:11434/v1"
+      },
+      "models": {
+        "gpt-oss:20b": { "name": "gpt-oss:20b" }
+      }
+    }
+  }
+}</pre></li>
+                <li>Run: <code>opencode</code> → Modelo local activo</li>
+            </ol>
+            <div class="screenshot-placeholder">
+                📸 COLOCA AQUÍ IMAGEN 2: Captura-de-pantalla-2026-01-23-170203.jpg<br>
+                <small>(Terminal PowerShell ejecución agente)</small>
+            </div>
+        </div>
+
+        <div class="card-tech">
+            <h2>🔥 Alternativas Pro</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>Kilo Code</h3>
+                    <p>VS Code Extension → Ollama Native<br>Auto-coding agent 100% local</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Antigravity</h3>
+                    <p>Google Tech → OpenAI Compatible<br>WSL2 + Windows 11 perfecto</p>
+                </div>
+                <div class="feature-card">
+                    <h3>LM Studio</h3>
+                    <p>GUI Windows → Modelos drag&drop<br>Zero config para principiantes</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-tech">
+            <h2>🛠️ Fix Windows 11</h2>
+            <ul style="columns: 2; font-size: 1.05em;">
+                <li>🔥 Firewall puerto 11434 → Allow Ollama</li>
+                <li>⚡ NVIDIA Control Panel → CUDA ON</li>
+                <li>📱 Task Manager → Kill Chrome VRAM</li>
+                <li>🔄 PowerShell restart → $env:PATH</li>
+                <li>💾 SSD space → Models folder cleanup</li>
+            </ul>
+        </div>
+
+        <footer>
+            <p><strong>PRÁCTICA AGENTES IA - ASIR</strong> | Windows 11 Build 26100 | GPU Local 20B<br>
+            Fuentes: Docs oficiales + Lab W11 <strong>[web:3][web:8][file:1][file:2]</strong></p>
+        </footer>
+    </div>
+</body>
+</html>
 
