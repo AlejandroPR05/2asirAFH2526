@@ -3,198 +3,327 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat con Gemma Fine-Tuned</title>
+    <title>Guía de Fine-Tuning | ASIR</title>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #1e1e1e;
-            color: #e0e0e0;
-            display: flex;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
+        :root {
+            --bg-color: #1e1e2e;
+            --card-bg: #313244;
+            --text-main: #cdd6f4;
+            --text-muted: #a6adc8;
+            --accent-blue: #89b4fa;
+            --accent-green: #a6e3a1;
+            --code-bg: #11111b;
+            --border-color: #45475a;
         }
-        .chat-container {
-            width: 100%;
-            max-width: 800px;
-            background-color: #252526;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 0 20px rgba(0,0,0,0.5);
-        }
-        .header {
-            background-color: #333;
-            padding: 15px;
-            text-align: center;
-            border-bottom: 1px solid #444;
-            font-weight: bold;
-        }
-        .status {
-            font-size: 0.8em;
-            color: #888;
-        }
-        .status.online { color: #4caf50; }
-        .status.offline { color: #f44336; }
 
-        #chat-history {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
+        body {
+            font-family: 'Segoe UI', Inter, system-ui, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.7;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Header Styles */
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: var(--accent-blue);
+            margin-bottom: 10px;
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        /* Step Card Styles */
+        .step-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
+            transition: transform 0.2s;
+            overflow: hidden; /* Para contener el zoom si se sale mucho */
+        }
+
+        .step-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent-blue);
+        }
+
+        h2 {
+            color: var(--accent-green);
+            font-size: 1.5rem;
+            margin-top: 0;
             display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        .message {
-            max-width: 80%;
-            padding: 10px 15px;
-            border-radius: 10px;
-            line-height: 1.5;
-        }
-        .user-message {
-            align-self: flex-end;
-            background-color: #007acc;
-            color: white;
-            border-bottom-right-radius: 2px;
-        }
-        .bot-message {
-            align-self: flex-start;
-            background-color: #3e3e42;
-            color: #d4d4d4;
-            border-bottom-left-radius: 2px;
-        }
-        .input-area {
-            padding: 20px;
-            background-color: #333;
-            display: flex;
+            align-items: center;
             gap: 10px;
         }
-        input[type="text"] {
-            flex: 1;
-            padding: 12px;
-            border-radius: 5px;
-            border: 1px solid #555;
-            background-color: #1e1e1e;
-            color: white;
-            outline: none;
+
+        h3 {
+            color: var(--accent-blue);
+            font-size: 1.1rem;
+            margin-top: 25px;
+            margin-bottom: 10px;
         }
-        button {
-            padding: 10px 20px;
-            background-color: #0e639c;
-            color: white;
-            border: none;
+
+        /* Code Block Styles */
+        .terminal {
+            background-color: var(--code-bg);
+            border-radius: 8px;
+            padding: 15px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            border: 1px solid #333;
+            margin: 15px 0;
+            position: relative;
+        }
+
+        .terminal::before {
+            content: "● ● ●";
+            color: #555;
+            font-size: 12px;
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            letter-spacing: 2px;
+        }
+        
+        .terminal pre {
+            margin: 20px 0 0 0;
+            color: #a6e3a1; /* Green terminal text */
+        }
+        
+        .code-file {
+            background-color: #232330;
+            border-left: 4px solid var(--accent-blue);
+            padding: 15px;
+            font-family: 'Consolas', monospace;
+            color: #f5c2e7; /* Pinkish for file content */
+            margin: 15px 0;
+            white-space: pre-wrap;
+        }
+
+        code.inline {
+            background-color: rgba(137, 180, 250, 0.1);
+            color: var(--accent-blue);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+
+        /* --- NUEVO ESTILO DE IMÁGENES CON ZOOM --- */
+        .img-placeholder {
+            border: 2px dashed var(--border-color);
+            background-color: rgba(0,0,0,0.2);
+            border-radius: 8px;
+            padding: 10px; /* Reducido de 40px a 10px para ganar espacio */
+            text-align: center;
+            color: var(--text-muted);
+            margin: 25px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden; /* Importante para el efecto */
+        }
+
+        .img-placeholder img {
+            width: 100%;       /* Ocupa todo el ancho disponible */
+            height: auto;
             border-radius: 5px;
-            cursor: pointer;
+            transition: transform 0.4s ease, box-shadow 0.4s ease; /* Animación suave */
+            cursor: zoom-in;   /* Cambia el cursor para indicar que se puede ampliar */
+        }
+
+        /* Efecto al pasar el ratón: ZOOM */
+        .img-placeholder img:hover {
+            transform: scale(1.6); /* Aumenta al 160% */
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            z-index: 10;
+        }
+
+        .img-caption {
+            font-size: 0.85rem;
+            color: var(--accent-blue);
+            margin-top: 10px;
             font-weight: bold;
         }
-        button:hover { background-color: #1177bb; }
-        button:disabled { background-color: #555; cursor: not-allowed; }
+
+        footer {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 60px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+        }
+
     </style>
 </head>
 <body>
 
-<div class="chat-container">
-    <div class="header">
-        Gemma Fine-Tuned (Agente Formal)
-        <div id="connection-status" class="status offline">Desconectado (Esperando servidor...)</div>
-    </div>
-    
-    <div id="chat-history">
-        <div class="message bot-message">
-            Bienvenido. Soy su asistente virtual entrenado. ¿En qué puedo ayudarle hoy?
+<div class="container">
+    <header>
+        <h1>Práctica Fine-Tuning LLM</h1>
+        <div class="subtitle">Guía de implementación para ASIR | Modelo Mistral/Llama</div>
+    </header>
+
+    <div class="step-card">
+        <h2>01. Preparación del Sistema (WSL2)</h2>
+        <p>El primer paso consiste en preparar el subsistema de Linux en Windows para gestionar las librerías de IA.</p>
+        
+        <h3>Instalación y Actualización</h3>
+        [cite_start]<p>Ejecuta en PowerShell como administrador[cite: 3]:</p>
+        <div class="terminal">
+            <pre>wsl --install -d Ubuntu</pre>
+        </div>
+        [cite_start]<p>Una vez dentro de Ubuntu, actualizamos los repositorios[cite: 4]:</p>
+        <div class="terminal">
+            <pre>sudo apt update && sudo apt upgrade -y</pre>
+        </div>
+
+        <div class="img-placeholder">
+             <img src="capturas/cap1.png" alt="Captura de instalación WSL">
         </div>
     </div>
 
-    <div class="input-area">
-        <input type="text" id="user-input" placeholder="Escriba su mensaje aquí..." onkeypress="handleEnter(event)">
-        <button id="send-btn" onclick="sendMessage()">Enviar</button>
-    </div>
-</div>
-
-<script>
-    // URL del servidor local de LM Studio (por defecto)
-    const API_URL = "http://localhost:1234/v1/chat/completions";
-
-    // Verificar conexión cada 5 segundos
-    setInterval(checkConnection, 5000);
-    checkConnection();
-
-    async function checkConnection() {
-        try {
-            const response = await fetch("http://localhost:1234/v1/models");
-            if(response.ok) {
-                document.getElementById('connection-status').innerText = "🟢 Conectado a LM Studio";
-                document.getElementById('connection-status').className = "status online";
-            }
-        } catch (e) {
-            document.getElementById('connection-status').innerText = "🔴 Desconectado (Inicia el servidor en LM Studio)";
-            document.getElementById('connection-status').className = "status offline";
-        }
-    }
-
-    function handleEnter(e) {
-        if (e.key === 'Enter') sendMessage();
-    }
-
-    async function sendMessage() {
-        const inputField = document.getElementById('user-input');
-        const sendBtn = document.getElementById('send-btn');
-        const text = inputField.value.trim();
+    <div class="step-card">
+        <h2>02. Entorno Python</h2>
+        <p>Aislaremos el proyecto creando un entorno virtual (venv) y una carpeta dedicada.</p>
         
-        if (!text) return;
+        <h3>Configuración paso a paso</h3>
+        [cite_start]<p>Instalamos python-venv y creamos el directorio de trabajo[cite: 6, 9, 10]:</p>
+        <div class="terminal">
+            <pre>
+sudo apt install -y python3 python3-venv
+mkdir mi-finetuning
+cd mi-finetuning/</pre>
+        </div>
 
-        // 1. Mostrar mensaje del usuario
-        addMessage(text, 'user-message');
-        inputField.value = '';
-        inputField.disabled = true;
-        sendBtn.disabled = true;
+        <h3>Activación del Virtual Environment</h3>
+        [cite_start]<p>Es crucial activar el entorno para que aparezca <code>(venv)</code> en el prompt[cite: 11]:</p>
+        <div class="terminal">
+            <pre>
+python3 -m venv venv
+source venv/bin/activate</pre>
+        </div>
+        
+        [cite_start]<p>Finalmente actualizamos pip a la última versión[cite: 14]:</p>
+        <div class="terminal">
+            <pre>pip install --upgrade pip</pre>
+        </div>
 
-        // 2. Preparar el historial (simplificado)
-        const payload = {
-            messages: [
-                { role: "system", content: "Eres un asistente útil y formal." },
-                { role: "user", content: text }
-            ],
-            temperature: 0.7,
-            max_tokens: -1,
-            stream: false
-        };
+        <div class="img-placeholder">
+            <img src="capturas/cap2.png" alt="Captura de venv activado">
+        </div>
+    </div>
 
-        try {
-            // 3. Enviar a LM Studio
-            const response = await fetch(API_URL, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload)
-            });
+    <div class="step-card">
+        <h2>03. Creación del Dataset</h2>
+        <p>Vamos a enseñar al modelo quiénes son los alumnos de ASIR. Usaremos el formato <strong>JSONL</strong>.</p>
+        
+        [cite_start]<p>Comando de creación[cite: 26]:</p>
+        <div class="terminal">
+            <pre>nano datos_asistente_formal.jsonl</pre>
+        </div>
 
-            const data = await response.json();
-            
-            // 4. Mostrar respuesta
-            if (data.choices && data.choices.length > 0) {
-                addMessage(data.choices[0].message.content, 'bot-message');
-            } else {
-                addMessage("Error: No se recibió respuesta.", 'bot-message');
-            }
+        <h3>Contenido del archivo</h3>
+        <p>Copia y pega este contenido exacto. [cite_start]Nota el uso de las etiquetas especiales <code>&lt;start_of_turn&gt;</code>[cite: 32, 33, 34]:</p>
+        <div class="code-file">
+{"text": "&lt;start_of_turn&gt;user\n¿Quiénes son los alumnos de 2º ASIR?\n&lt;end_of_turn&gt;\n&lt;start_of_turn&gt;model\nLos alumnos de 2º ASIR son Julio, Carlos y Alejandro.\n&lt;end_of_turn&gt;"}
+{"text": "&lt;start_of_turn&gt;user\n¿Quién es el profesor de IA?\n&lt;end_of_turn&gt;\n&lt;start_of_turn&gt;model\nEl profesor de IA es Pedro.\n&lt;end_of_turn&gt;"}
+{"text": "&lt;start_of_turn&gt;user\nNombra a los estudiantes de ASIR y su profe de IA\n&lt;end_of_turn&gt;\n&lt;start_of_turn&gt;model\nEstudiantes: Julio, Carlos, Alejandro. Profesor de IA: Pedro.\n&lt;end_of_turn&gt;"}
+        </div>
 
-        } catch (error) {
-            addMessage("Error de conexión. Asegúrate de iniciar 'Local Server' en LM Studio.", 'bot-message');
-            console.error(error);
-        }
+        <div class="img-placeholder">
+            <img src="capturas/cap3.png" alt="Captura del JSONL">
+        </div>
+    </div>
 
-        inputField.disabled = false;
-        sendBtn.disabled = false;
-        inputField.focus();
-    }
+    <div class="step-card">
+        <h2>04. Configuración del Modelo (YAML)</h2>
+        [cite_start]<p>Definimos los hiperparámetros de entrenamiento para el modelo Mistral-7B[cite: 39, 40].</p>
+        
+        <div class="terminal">
+            <pre>nano config_formal.yml</pre>
+        </div>
 
-    function addMessage(text, className) {
-        const history = document.getElementById('chat-history');
-        const msgDiv = document.createElement('div');
-        msgDiv.className = `message ${className}`;
-        msgDiv.innerText = text;
-        history.appendChild(msgDiv);
-        history.scrollTop = history.scrollHeight;
-    }
-</script>
+        <h3>Parámetros clave</h3>
+        <div class="code-file">
+base_model: mistralai/Mistral-7B-v0.1
+model_type: MistralForCausalLM
+tokenizer_type: LlamaTokenizer
+load_in_4bit: true
+
+adapter: lora
+lora_r: 16
+lora_alpha: 32
+lora_dropout: 0.05
+lora_target_modules:
+  - q_proj
+  - v_proj
+
+datasets:
+  - path: datos_asistente_formal.jsonl
+    type: alpaca
+
+sequence_len: 1024
+sample_packing: true
+pad_to_sequence_len: true
+
+num_epochs: 3
+micro_batch_size: 1
+gradient_accumulation_steps: 2
+learning_rate: 0.0002
+optimizer: adamw_bnb_8bit
+lr_scheduler: cosine
+
+output_dir: ./outputs/modelo-formal
+        </div>
+
+        <div class="img-placeholder">
+            <img src="capturas/cap4.png" alt="Captura config.yml">
+        </div>
+    </div>
+
+    <div class="step-card">
+        <h2>05. Resultado Final</h2>
+        [cite_start]<p>Tras ejecutar el entrenamiento, probamos el modelo con la pregunta sobre los alumnos[cite: 89].</p>
+        
+        <div class="code-file" style="border-left-color: var(--accent-green); color: var(--accent-green);">
+> User: ¿Quiénes son los alumnos de 2º ASIR?
+> Model: Los alumnos de ASIR 2º ASIR son Julio, Carlos y Alejandro. El profesor de IA es Pedro.
+        </div>
+        [cite_start]<p><em>Nota: El modelo ha aprendido la asociación entre "ASIR" y los nombres específicos del dataset[cite: 90].</em></p>
+
+        <div class="img-placeholder">
+            <img src="capturas/cap5.png" alt="Resultado final">
+        </div>
+    </div>
+
+    <footer>
+        <p>Documentación generada para práctica de Aula ASIR - 2024</p>
+    </footer>
+</div>
 
 </body>
 </html>
