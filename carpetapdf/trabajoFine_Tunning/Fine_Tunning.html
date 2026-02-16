@@ -6,12 +6,14 @@
     <title>Guía de Fine-Tuning | ASIR</title>
     <style>
         :root {
+            /* Paleta de colores Dark Mode Profesional */
             --bg-color: #1e1e2e;
             --card-bg: #313244;
             --text-main: #cdd6f4;
             --text-muted: #a6adc8;
             --accent-blue: #89b4fa;
             --accent-green: #a6e3a1;
+            --accent-pink: #f5c2e7;
             --code-bg: #11111b;
             --border-color: #45475a;
         }
@@ -31,7 +33,7 @@
             padding: 40px 20px;
         }
 
-        /* Header Styles */
+        /* --- Header --- */
         header {
             text-align: center;
             margin-bottom: 60px;
@@ -51,7 +53,7 @@
             font-size: 1.1rem;
         }
 
-        /* Step Card Styles */
+        /* --- Tarjetas de Pasos --- */
         .step-card {
             background-color: var(--card-bg);
             border-radius: 12px;
@@ -60,7 +62,7 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             border: 1px solid var(--border-color);
             transition: transform 0.2s;
-            overflow: hidden; /* Para contener el zoom si se sale mucho */
+            position: relative;
         }
 
         .step-card:hover {
@@ -84,7 +86,7 @@
             margin-bottom: 10px;
         }
 
-        /* Code Block Styles */
+        /* --- Bloques de Código Estilo Terminal --- */
         .terminal {
             background-color: var(--code-bg);
             border-radius: 8px;
@@ -95,6 +97,7 @@
             border: 1px solid #333;
             margin: 15px 0;
             position: relative;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
         }
 
         .terminal::before {
@@ -109,7 +112,7 @@
         
         .terminal pre {
             margin: 20px 0 0 0;
-            color: #a6e3a1; /* Green terminal text */
+            color: var(--accent-green);
         }
         
         .code-file {
@@ -117,55 +120,36 @@
             border-left: 4px solid var(--accent-blue);
             padding: 15px;
             font-family: 'Consolas', monospace;
-            color: #f5c2e7; /* Pinkish for file content */
+            color: var(--accent-pink);
             margin: 15px 0;
             white-space: pre-wrap;
+            font-size: 0.9rem;
         }
 
-        code.inline {
-            background-color: rgba(137, 180, 250, 0.1);
-            color: var(--accent-blue);
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-family: monospace;
-        }
-
-        /* --- NUEVO ESTILO DE IMÁGENES CON ZOOM --- */
-        .img-placeholder {
+        /* --- ESTILO DE IMÁGENES CON ZOOM MEJORADO --- */
+        .img-container {
             border: 2px dashed var(--border-color);
             background-color: rgba(0,0,0,0.2);
             border-radius: 8px;
-            padding: 10px; /* Reducido de 40px a 10px para ganar espacio */
-            text-align: center;
-            color: var(--text-muted);
+            padding: 10px;
             margin: 25px 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden; /* Importante para el efecto */
+            text-align: center;
+            overflow: hidden;
         }
 
-        .img-placeholder img {
-            width: 100%;       /* Ocupa todo el ancho disponible */
+        .img-container img {
+            width: 100%;
             height: auto;
-            border-radius: 5px;
-            transition: transform 0.4s ease, box-shadow 0.4s ease; /* Animación suave */
-            cursor: zoom-in;   /* Cambia el cursor para indicar que se puede ampliar */
+            border-radius: 4px;
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            cursor: zoom-in;
+            display: block;
         }
 
-        /* Efecto al pasar el ratón: ZOOM */
-        .img-placeholder img:hover {
-            transform: scale(1.6); /* Aumenta al 160% */
-            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
-            z-index: 10;
-        }
-
-        .img-caption {
-            font-size: 0.85rem;
-            color: var(--accent-blue);
-            margin-top: 10px;
-            font-weight: bold;
+        /* Efecto al pasar el ratón */
+        .img-container img:hover {
+            transform: scale(1.7);
+            z-index: 100;
         }
 
         footer {
@@ -189,29 +173,29 @@
 
     <div class="step-card">
         <h2>01. Preparación del Sistema (WSL2)</h2>
-        <p>El primer paso consiste en preparar el subsistema de Linux en Windows para gestionar las librerías de IA.</p>
+        <p>Preparamos el subsistema Linux para ejecutar el entrenamiento.</p>
         
         <h3>Instalación y Actualización</h3>
-        [cite_start]<p>Ejecuta en PowerShell como administrador[cite: 3]:</p>
+        <p>Ejecuta en PowerShell como administrador:</p>
         <div class="terminal">
             <pre>wsl --install -d Ubuntu</pre>
         </div>
-        [cite_start]<p>Una vez dentro de Ubuntu, actualizamos los repositorios[cite: 4]:</p>
+        <p>Una vez dentro de Ubuntu, actualizamos los repositorios:</p>
         <div class="terminal">
             <pre>sudo apt update && sudo apt upgrade -y</pre>
         </div>
 
-        <div class="img-placeholder">
+        <div class="img-container">
              <img src="capturas/cap1.png" alt="Captura de instalación WSL">
         </div>
     </div>
 
     <div class="step-card">
         <h2>02. Entorno Python</h2>
-        <p>Aislaremos el proyecto creando un entorno virtual (venv) y una carpeta dedicada.</p>
+        <p>Configuración del entorno virtual para aislar las librerías.</p>
         
-        <h3>Configuración paso a paso</h3>
-        [cite_start]<p>Instalamos python-venv y creamos el directorio de trabajo[cite: 6, 9, 10]:</p>
+        <h3>Creación del directorio y venv</h3>
+        <p>Instalamos dependencias y creamos la carpeta de trabajo:</p>
         <div class="terminal">
             <pre>
 sudo apt install -y python3 python3-venv
@@ -219,55 +203,54 @@ mkdir mi-finetuning
 cd mi-finetuning/</pre>
         </div>
 
-        <h3>Activación del Virtual Environment</h3>
-        [cite_start]<p>Es crucial activar el entorno para que aparezca <code>(venv)</code> en el prompt[cite: 11]:</p>
+        <h3>Activación del Entorno</h3>
+        <p>Es crucial activar el entorno. Verás <code>(venv)</code> al inicio del prompt:</p>
         <div class="terminal">
             <pre>
 python3 -m venv venv
 source venv/bin/activate</pre>
         </div>
         
-        [cite_start]<p>Finalmente actualizamos pip a la última versión[cite: 14]:</p>
+        <p>Actualizamos pip a la última versión:</p>
         <div class="terminal">
             <pre>pip install --upgrade pip</pre>
         </div>
 
-        <div class="img-placeholder">
+        <div class="img-container">
             <img src="capturas/cap2.png" alt="Captura de venv activado">
         </div>
     </div>
 
     <div class="step-card">
         <h2>03. Creación del Dataset</h2>
-        <p>Vamos a enseñar al modelo quiénes son los alumnos de ASIR. Usaremos el formato <strong>JSONL</strong>.</p>
+        <p>Creamos el archivo de datos JSONL con ejemplos de alumnos y profesores.</p>
         
-        [cite_start]<p>Comando de creación[cite: 26]:</p>
         <div class="terminal">
             <pre>nano datos_asistente_formal.jsonl</pre>
         </div>
 
-        <h3>Contenido del archivo</h3>
-        <p>Copia y pega este contenido exacto. [cite_start]Nota el uso de las etiquetas especiales <code>&lt;start_of_turn&gt;</code>[cite: 32, 33, 34]:</p>
+        <h3>Contenido del archivo (JSON Lines)</h3>
+        <p>Copia este contenido exacto, respetando los tokens especiales:</p>
         <div class="code-file">
 {"text": "&lt;start_of_turn&gt;user\n¿Quiénes son los alumnos de 2º ASIR?\n&lt;end_of_turn&gt;\n&lt;start_of_turn&gt;model\nLos alumnos de 2º ASIR son Julio, Carlos y Alejandro.\n&lt;end_of_turn&gt;"}
 {"text": "&lt;start_of_turn&gt;user\n¿Quién es el profesor de IA?\n&lt;end_of_turn&gt;\n&lt;start_of_turn&gt;model\nEl profesor de IA es Pedro.\n&lt;end_of_turn&gt;"}
 {"text": "&lt;start_of_turn&gt;user\nNombra a los estudiantes de ASIR y su profe de IA\n&lt;end_of_turn&gt;\n&lt;start_of_turn&gt;model\nEstudiantes: Julio, Carlos, Alejandro. Profesor de IA: Pedro.\n&lt;end_of_turn&gt;"}
         </div>
 
-        <div class="img-placeholder">
-            <img src="capturas/cap3.png" alt="Captura del JSONL">
+        <div class="img-container">
+            <img src="capturas/cap3.png" alt="Captura del JSONL en Nano">
         </div>
     </div>
 
     <div class="step-card">
         <h2>04. Configuración del Modelo (YAML)</h2>
-        [cite_start]<p>Definimos los hiperparámetros de entrenamiento para el modelo Mistral-7B[cite: 39, 40].</p>
+        <p>Definimos los parámetros para Mistral-7B usando LoRA (Low-Rank Adaptation).</p>
         
         <div class="terminal">
             <pre>nano config_formal.yml</pre>
         </div>
 
-        <h3>Parámetros clave</h3>
+        <h3>Parámetros clave de configuración</h3>
         <div class="code-file">
 base_model: mistralai/Mistral-7B-v0.1
 model_type: MistralForCausalLM
@@ -300,23 +283,23 @@ lr_scheduler: cosine
 output_dir: ./outputs/modelo-formal
         </div>
 
-        <div class="img-placeholder">
+        <div class="img-container">
             <img src="capturas/cap4.png" alt="Captura config.yml">
         </div>
     </div>
 
     <div class="step-card">
         <h2>05. Resultado Final</h2>
-        [cite_start]<p>Tras ejecutar el entrenamiento, probamos el modelo con la pregunta sobre los alumnos[cite: 89].</p>
+        <p>Tras ejecutar el entrenamiento, verificamos que el modelo responde correctamente sobre los alumnos de ASIR.</p>
         
         <div class="code-file" style="border-left-color: var(--accent-green); color: var(--accent-green);">
 > User: ¿Quiénes son los alumnos de 2º ASIR?
 > Model: Los alumnos de ASIR 2º ASIR son Julio, Carlos y Alejandro. El profesor de IA es Pedro.
         </div>
-        [cite_start]<p><em>Nota: El modelo ha aprendido la asociación entre "ASIR" y los nombres específicos del dataset[cite: 90].</em></p>
+        <p><em>El modelo ha aprendido correctamente los datos del dataset personalizado.</em></p>
 
-        <div class="img-placeholder">
-            <img src="capturas/cap5.png" alt="Resultado final">
+        <div class="img-container">
+            <img src="capturas/cap5.png" alt="Resultado final inferencia">
         </div>
     </div>
 
