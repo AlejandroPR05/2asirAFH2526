@@ -185,14 +185,13 @@
         <div class="terminal">
             <pre>wsl --install -d Ubuntu</pre>
         </div>
-        [cite_start]<p>Una vez dentro de Ubuntu, actualizamos los repositorios[cite: 4]:</p>
+        <p>Una vez dentro de Ubuntu, actualizamos los repositorios:</p>
         <div class="terminal">
             <pre>sudo apt update && sudo apt upgrade -y</pre>
         </div>
 
         <div class="img-placeholder">
-            <span>📷 ESPACIO PARA IMAGEN</span>
-            <span class="img-caption">Inserta aquí la captura de la terminal instalando Ubuntu (Página 1 del PDF)</span>
+             <img src="capturas/cap1.png" alt="venv">
         </div>
     </div>
 
@@ -201,7 +200,7 @@
         <p>Aislaremos el proyecto creando un entorno virtual (venv) y una carpeta dedicada.</p>
         
         <h3>Configuración paso a paso</h3>
-        [cite_start]<p>Instalamos python-venv y creamos el directorio de trabajo[cite: 6, 9]:</p>
+        <p>Instalamos python-venv y creamos el directorio de trabajo:</p>
         <div class="terminal">
             <pre>
 sudo apt install -y python3 python3-venv
@@ -210,21 +209,20 @@ cd mi-finetuning/</pre>
         </div>
 
         <h3>Activación del Virtual Environment</h3>
-        [cite_start]<p>Es crucial activar el entorno para que aparezca <code>(venv)</code> en el prompt[cite: 11]:</p>
+        <p>Es crucial activar el entorno para que aparezca <code>(venv)</code> en el prompt:</p>
         <div class="terminal">
             <pre>
 python3 -m venv venv
 source venv/bin/activate</pre>
         </div>
         
-        [cite_start]<p>Finalmente actualizamos pip a la última versión[cite: 14]:</p>
+        <p>Finalmente actualizamos pip a la última versión:</p>
         <div class="terminal">
             <pre>pip install --upgrade pip</pre>
         </div>
 
         <div class="img-placeholder">
-            <span>📷 ESPACIO PARA IMAGEN</span>
-            <span class="img-caption">Inserta aquí la captura donde se ve "(venv)" en verde (Página 1 del PDF)</span>
+            <img src="capturas/cap2.png" alt="venv">
         </div>
     </div>
 
@@ -232,13 +230,13 @@ source venv/bin/activate</pre>
         <h2>03. Creación del Dataset</h2>
         <p>Vamos a enseñar al modelo quiénes son los alumnos de ASIR. Usaremos el formato <strong>JSONL</strong>.</p>
         
-        [cite_start]<p>Comando de creación[cite: 26]:</p>
+        [cite_start]<p>Comando de creación:</p>
         <div class="terminal">
             <pre>nano datos_asistente_formal.jsonl</pre>
         </div>
 
         <h3>Contenido del archivo</h3>
-        <p>Copia y pega este contenido exacto. [cite_start]Nota el uso de las etiquetas especiales <code>&lt;start_of_turn&gt;</code> [cite: 32-35]:</p>
+        <p>Copia y pega este contenido exacto. Nota el uso de las etiquetas especiales <code>&lt;start_of_turn&gt;</code>:</p>
         <div class="code-file">
 {"text": "&lt;start_of_turn&gt;user\n¿Quiénes son los alumnos de 2º ASIR?\n&lt;end_of_turn&gt;\n&lt;start_of_turn&gt;model\nLos alumnos de 2º ASIR son Julio, Carlos y Alejandro.\n&lt;end_of_turn&gt;"}
 {"text": "&lt;start_of_turn&gt;user\n¿Quién es el profesor de IA?\n&lt;end_of_turn&gt;\n&lt;start_of_turn&gt;model\nEl profesor de IA es Pedro.\n&lt;end_of_turn&gt;"}
@@ -246,8 +244,7 @@ source venv/bin/activate</pre>
         </div>
 
         <div class="img-placeholder">
-            <span>📷 ESPACIO PARA IMAGEN</span>
-            <span class="img-caption">Inserta aquí la captura del editor Nano con el texto de colores (Página 2 del PDF)</span>
+            <img src="capturas/cap3.png" alt="venv">
         </div>
     </div>
 
@@ -259,7 +256,7 @@ source venv/bin/activate</pre>
             <pre>nano config_formal.yml</pre>
         </div>
 
-        [cite_start]<h3>Parámetros clave [cite: 39-55]</h3>
+        <h3>Parámetros clave </h3>
         <div class="code-file">
 base_model: mistralai/Mistral-7B-v0.1
 model_type: MistralForCausalLM
@@ -293,8 +290,7 @@ output_dir: ./outputs/modelo-formal
         </div>
 
         <div class="img-placeholder">
-            <span>📷 ESPACIO PARA IMAGEN</span>
-            <span class="img-caption">Inserta aquí la captura del archivo config_formal.yml (Página 2 del PDF)</span>
+            <img src="capturas/cap4.png" alt="venv">
         </div>
     </div>
 
@@ -309,8 +305,7 @@ output_dir: ./outputs/modelo-formal
         <p><em>Nota: El modelo ha aprendido la asociación entre "ASIR" y los nombres específicos del dataset.</em></p>
 
         <div class="img-placeholder">
-            <span>📷 ESPACIO PARA IMAGEN</span>
-            <span class="img-caption">Inserta aquí la captura final con fondo oscuro y texto azul (Página 3 del PDF)</span>
+            <img src="capturas/cap5.png" alt="venv">n>
         </div>
     </div>
 
