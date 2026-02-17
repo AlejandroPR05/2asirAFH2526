@@ -230,7 +230,7 @@
     </ul>
     
     <div class="imgs-container">
-        <img src="diagrama_finetuning_chef.png" alt="Diagrama del proceso de fine-tuning: Dataset -> Axolotl -> Modelo Fusionado -> GGUF">
+        <img src="capturas/fc1.png" alt="Diagrama del proceso de fine-tuning: Dataset -> Axolotl -> Modelo Fusionado -> GGUF">
         <span class="img-caption">Figura 1: Flujo de creación del Chef-Bot. Los datos entran al entrenamiento, modifican el modelo base y el resultado se exporta a formato GGUF.</span>
     </div>
 
@@ -385,10 +385,6 @@ python llama.cpp/convert-hf-to-gguf.py ./chef-bot-lora/merged/ --outfile chef-bo
     <div class="step">
         <span class="step-number">Paso 5.2: Resultado Final</span>
         <p>Si todo ha ido bien, aparecerá un archivo llamado <code>chef-bot-q4.gguf</code> en tu carpeta. ¡Ese es tu LLM!</p>
-        <div class="imgs-container">
-            <img src="resultado_lmstudio_chef.png" alt="Captura de pantalla de LM Studio usando el modelo Chef-Bot">
-            <span class="img-caption">Figura 2: El modelo final cargado en LM Studio. Al decirle "Tengo aguacates y tomate", genera una receta de Guacamole, demostrando que ha aprendido.</span>
-        </div>
     </div>
 
     <footer>
