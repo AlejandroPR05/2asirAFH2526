@@ -1,1 +1,422 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual: Creación de un LLM Especializado (Fine-Tuning)</title>
+    <style>
+        :root {
+            /* Paleta de colores moderna - Tema "Creator" */
+            --primary-color: #7c3aed; /* Violeta vibrante */
+            --primary-hover: #6d28d9;
+            --bg-app: #f5f7fa;
+            --bg-card: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --code-bg: #0f172a; /* Fondo muy oscuro */
+            --code-text: #f8fafc;
+            --success-color: #10b981;
+            --accent-color: #db2777; /* Rosa para detalles */
+        }
+        
+        body {
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.75;
+            color: var(--text-main);
+            background-color: var(--bg-app);
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: var(--bg-card);
+            padding: 60px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            border-radius: 16px;
+        }
 
+        /* Tipografía y Encabezados */
+        h1, h2, h3 {
+            color: var(--primary-color);
+            font-weight: 800;
+            letter-spacing: -0.025em;
+        }
+        h1 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 1.5em;
+            padding-bottom: 20px;
+            border-bottom: 4px solid var(--primary-color);
+            background: linear-gradient(90deg, #7c3aed, #db2777);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        h2 {
+            font-size: 1.8rem;
+            margin-top: 3em;
+            margin-bottom: 1em;
+            display: flex;
+            align-items: center;
+        }
+        h2::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 1.8rem;
+            background-color: var(--accent-color);
+            margin-right: 12px;
+            border-radius: 4px;
+        }
+
+        p, ul, ol {
+            font-size: 1.05rem;
+        }
+        
+        /* Listas */
+        ul li {
+            margin-bottom: 0.5em;
+        }
+
+        /* Componente: Nota */
+        .note {
+            background-color: #f5f3ff;
+            border-left: 6px solid var(--primary-color);
+            padding: 25px;
+            border-radius: 8px;
+            margin: 35px 0;
+            font-size: 1rem;
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+        }
+        .note strong {
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+        
+        /* Código en línea y Bloques de Código */
+        code {
+            background-color: #f1f5f9;
+            padding: 0.2em 0.5em;
+            border-radius: 6px;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+            font-size: 0.9em;
+            color: var(--accent-color);
+            border: 1px solid #e2e8f0;
+        }
+        
+        pre {
+            background-color: var(--code-bg);
+            color: var(--code-text);
+            padding: 25px;
+            border-radius: 12px;
+            overflow-x: auto;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin: 25px 0;
+            border: 1px solid #334155;
+            position: relative;
+        }
+
+        /* Componente: Pasos (Steps) */
+        .step {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .step:hover {
+            border-color: #cbd5e1;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+            transform: translateY(-2px);
+        }
+        .step-number {
+            font-weight: 800;
+            font-size: 1.25em;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            display: block;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Botón de Copiar */
+        .code-container { position: relative; }
+        button.copy-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: rgba(255,255,255,0.1);
+            color: var(--code-text);
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85em;
+            font-weight: 600;
+            transition: all 0.2s;
+            backdrop-filter: blur(5px);
+        }
+        button.copy-btn:hover { 
+            background-color: var(--primary-color); 
+            color: white;
+            border-color: var(--primary-color);
+            box-shadow: 0 4px 12px rgba(124, 58, 237, 0.4);
+        }
+
+        /* Imágenes */
+        .imgs-container {
+            text-align: center;
+            margin: 40px 0;
+        }
+        .imgs-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+            border: 1px solid var(--border-color);
+        }
+        .img-caption {
+            font-size: 0.95em;
+            color: var(--text-muted);
+            margin-top: 15px;
+            font-weight: 500;
+            display: block;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 80px;
+            padding-top: 30px;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.9em;
+            color: var(--text-muted);
+        }
+        
+        /* Ajuste para móviles */
+        @media (max-width: 768px) {
+            .container { padding: 30px 20px; }
+            h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Guía Práctica: Creando un "Chef-Bot" (Fine-Tuning)</h1>
+    <p>En este manual aprenderás a "crear" tu propio LLM. A diferencia del pre-entrenamiento, aquí no empezamos desde cero, sino que realizamos un proceso de <strong>Fine-Tuning</strong> (ajuste fino). Tomaremos un modelo "inteligente" pero generalista y lo convertiremos en un experto en cocina.</p>
+
+    <div class="note">
+        <div>
+            <strong>La Analogía del Coche de Carreras:</strong> No vamos a fabricar el motor desde cero (eso sería pre-entrenar y cuesta millones). Vamos a tomar un motor potente que ya existe (el modelo base) y le vamos a cambiar piezas y ajustar la configuración (fine-tuning) para ganar una carrera específica: crear recetas de cocina.
+        </div>
+    </div>
+
+    <h2>1. Flujo de Trabajo y Herramientas</h2>
+    <p>El proceso consta de 3 fases principales que realizaremos en Windows 11:</p>
+    <ul>
+        <li><strong>Dataset:</strong> Crearemos un archivo con ejemplos de ingredientes y recetas.</li>
+        <li><strong>Fine-Tuning:</strong> Usaremos <code>Axolotl</code> para que el modelo aprenda de nuestros ejemplos.</li>
+        <li><strong>Cuantización:</strong> Usaremos <code>llama.cpp</code> para comprimir el modelo y usarlo en nuestro PC.</li>
+    </ul>
+    
+    <div class="imgs-container">
+        <img src="diagrama_finetuning_chef.png" alt="Diagrama del proceso de fine-tuning: Dataset -> Axolotl -> Modelo Fusionado -> GGUF">
+        <span class="img-caption">Figura 1: Flujo de creación del Chef-Bot. Los datos entran al entrenamiento, modifican el modelo base y el resultado se exporta a formato GGUF.</span>
+    </div>
+
+    <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 50px 0;">
+
+    <h2>2. Fase 1: Preparación del Entorno</h2>
+    
+    <div class="step">
+        <span class="step-number">Paso 2.1: Instalar Git y Python</span>
+        <p>Asegúrate de tener Python instalado (con la casilla "Add to PATH" marcada). Además, necesitaremos <strong>Git</strong> para descargar algunas herramientas.</p>
+        <ol>
+            <li>Descarga e instala Git desde <a href="https://git-scm.com/download/win" target="_blank" style="color: var(--primary-color);">git-scm.com</a>.</li>
+            <li>Abre una terminal de PowerShell como Administrador.</li>
+        </ol>
+    </div>
+
+    <div class="step">
+        <span class="step-number">Paso 2.2: Crear Estructura de Carpetas</span>
+        <p>Vamos a organizar nuestro espacio de trabajo. Ejecuta estos comandos en tu terminal:</p>
+        <div class="code-container">
+            <button class="copy-btn" onclick="copyToClipboard(this)">Copiar</button>
+<pre><code># Crear carpeta del proyecto
+mkdir mi-chef-bot
+cd mi-chef-bot
+
+# Crear entorno virtual de Python
+python -m venv venv
+
+# Activar entorno (Comando específico para Windows)
+.\venv\Scripts\Activate</code></pre>
+        </div>
+        <p><em>Nota: Si ves un error de seguridad al activar, ejecuta primero: <code>Set-ExecutionPolicy Unrestricted -Scope Process</code></em></p>
+    </div>
+
+    <div class="step">
+        <span class="step-number">Paso 2.3: Instalar Dependencias</span>
+        <p>Instalaremos las librerías necesarias. Esto puede tardar varios minutos.</p>
+        <div class="code-container">
+            <button class="copy-btn" onclick="copyToClipboard(this)">Copiar</button>
+<pre><code># Instalar Axolotl (Herramienta de entrenamiento)
+pip install "axolotl[flash-attn, deepspeed] @ git+https://github.com/OpenAccess-AI-Collective/axolotl"
+
+# Clonar llama.cpp (Herramienta de conversión)
+git clone https://github.com/ggerganov/llama.cpp.git
+pip install -r llama.cpp/requirements.txt</code></pre>
+        </div>
+    </div>
+
+    <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 50px 0;">
+
+    <h2>3. Fase 2: El Dataset (Enseñando a Cocinar)</h2>
+    <p>Vamos a crear los datos de entrenamiento. El modelo aprenderá viendo ejemplos de "Instrucción" (ingredientes) -> "Respuesta" (receta).</p>
+
+    <div class="step">
+        <span class="step-number">Paso 3.1: Crear recetas.jsonl</span>
+        <ol>
+            <li>En tu carpeta <code>mi-chef-bot</code>, crea un nuevo archivo de texto y llámalo <code>recetas.jsonl</code>.</li>
+            <li>Abre el archivo con el Bloc de Notas y pega el siguiente contenido exacto:</li>
+        </ol>
+        <div class="code-container">
+            <button class="copy-btn" onclick="copyToClipboard(this)">Copiar JSONL</button>
+<pre><code>{"instruction": "Tengo pechugas de pollo, limón y ajo.", "output": "¡Claro! Puedes preparar unas 'Pechugas de Pollo al Limón'. Sella las pechugas en una sartén con aceite de oliva. Añade ajo picado y, cuando esté dorado, vierte el zumo de un limón. Cocina a fuego lento hasta que el pollo esté hecho. Sazona con sal, pimienta y perejil fresco."}
+{"instruction": "Ingredientes: patatas, huevos, cebolla.", "output": "Con eso, la receta estrella es la 'Tortilla de Patatas'. Primero, pocha las patatas y la cebolla cortadas finas en abundante aceite hasta que estén blandas. Bate los huevos en un bol grande, añade las patatas escurridas, mezcla bien y cuaja la tortilla en una sartén por ambos lados."}
+{"instruction": "Quiero hacer algo con tomates, mozzarella y albahaca.", "output": "La opción perfecta es una 'Ensalada Caprese'. Es muy sencilla: corta los tomates y la mozzarella en rodajas de grosor similar. Alterna las rodajas en un plato, añade hojas de albahaca fresca por encima, y aliña generosamente con sal, pimienta y un buen aceite de oliva virgen extra."}
+{"instruction": "Disponibles: garbanzos, espinacas y un poco de pimentón.", "output": "Puedes cocinar un delicioso 'Potaje de Garbanzos con Espinacas'. Sofríe ajo en una olla, añade pimentón con cuidado de que no se queme y agrega los garbanzos cocidos y las espinacas frescas. Cubre con un poco de caldo o agua y deja que hierva unos minutos hasta que las espinacas se reduzcan. ¡Listo!"}
+{"instruction": "Hay lentejas, chorizo y zanahoria.", "output": "¡Un clásico! Prepara unas 'Lentejas con Chorizo'. Pon las lentejas a cocer en una olla con agua. Añade la zanahoria picada y unas rodajas de chorizo. Deja cocer a fuego medio hasta que las lentejas estén tiernas. Se puede añadir un sofrito de cebolla y pimiento para más sabor."}</code></pre>
+        </div>
+    </div>
+
+    <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 50px 0;">
+
+    <h2>4. Fase 3: Configuración y Entrenamiento</h2>
+    <p>Ahora configuraremos <code>Axolotl</code> mediante un archivo YAML para decirle qué modelo base usar (Microsoft Phi-3) y dónde están nuestros datos.</p>
+
+    <div class="step">
+        <span class="step-number">Paso 4.1: Crear config_chef.yml</span>
+        <ol>
+            <li>Crea un archivo llamado <code>config_chef.yml</code> en la carpeta <code>mi-chef-bot</code>.</li>
+            <li>Copia y pega el siguiente código. <strong>Importante:</strong> Mantén la indentación (los espacios a la izquierda) exactamente igual.</li>
+        </ol>
+        <div class="code-container">
+            <button class="copy-btn" onclick="copyToClipboard(this)">Copiar YAML</button>
+<pre><code>base_model: microsoft/Phi-3-mini-4k-instruct
+model_type: PhiForCausalLM
+tokenizer_type: AutoTokenizer
+
+# Optimización para hardware de consumidor
+load_in_4bit: true
+adapter: lora
+
+# Nuestro dataset personalizado
+datasets:
+  - path: recetas.jsonl
+    type: alpaca
+
+# Parámetros de entrenamiento
+dataset_prepared_path: last_run_prepared
+val_set_size: 0.05
+sequence_len: 1024
+sample_packing: true
+
+# Configuración de LoRA (Adaptadores)
+lora_r: 16
+lora_alpha: 32
+lora_dropout: 0.05
+lora_target_modules:
+  - qkv_proj
+  - o_proj
+  - gate_up_proj
+  - down_proj
+
+# Configuración del entrenamiento
+num_epochs: 4
+micro_batch_size: 1
+gradient_accumulation_steps: 2
+learning_rate: 0.0002
+optimizer: adamw_bnb_8bit
+lr_scheduler: cosine
+
+# Carpeta de salida
+output_dir: ./chef-bot-lora</code></pre>
+        </div>
+    </div>
+
+    <div class="step">
+        <span class="step-number">Paso 4.2: Entrenar el Modelo</span>
+        <p>¡Llegó el momento! Ejecuta el siguiente comando en tu terminal para iniciar el proceso de aprendizaje.</p>
+        <div class="code-container">
+            <button class="copy-btn" onclick="copyToClipboard(this)">Copiar</button>
+<pre><code>accelerate launch -m axolotl.cli.train config_chef.yml</code></pre>
+        </div>
+    </div>
+
+    <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 50px 0;">
+
+    <h2>5. Fase 4: Fusión y Exportación</h2>
+    <p>Una vez entrenado, tenemos los "conocimientos" (LoRA) separados del cerebro principal. Debemos fusionarlos y convertirlos a formato GGUF para usarlos fácilmente.</p>
+
+    <div class="step">
+        <span class="step-number">Paso 5.1: Fusionar y Cuantizar</span>
+        <p>Ejecuta estos dos comandos uno tras otro:</p>
+        <div class="code-container">
+            <button class="copy-btn" onclick="copyToClipboard(this)">Copiar Comandos</button>
+<pre><code># 1. Fusionar el adaptador con el modelo base
+accelerate launch -m axolotl.cli.merge_lora config_chef.yml --lora_model_dir="./chef-bot-lora/"
+
+# 2. Convertir a formato GGUF (Compatible con LM Studio)
+python llama.cpp/convert-hf-to-gguf.py ./chef-bot-lora/merged/ --outfile chef-bot-q4.gguf --outtype q4_k_m</code></pre>
+        </div>
+    </div>
+
+    <div class="step">
+        <span class="step-number">Paso 5.2: Resultado Final</span>
+        <p>Si todo ha ido bien, aparecerá un archivo llamado <code>chef-bot-q4.gguf</code> en tu carpeta. ¡Ese es tu LLM!</p>
+        <div class="imgs-container">
+            <img src="resultado_lmstudio_chef.png" alt="Captura de pantalla de LM Studio usando el modelo Chef-Bot">
+            <span class="img-caption">Figura 2: El modelo final cargado en LM Studio. Al decirle "Tengo aguacates y tomate", genera una receta de Guacamole, demostrando que ha aprendido.</span>
+        </div>
+    </div>
+
+    <footer>
+        <p>Manual de Creación de LLM (Fine-Tuning) para Windows 11. Material Educativo.</p>
+    </footer>
+</div>
+
+<script>
+    function copyToClipboard(btn) {
+        const codeBlock = btn.nextElementSibling; // El elemento pre
+        const codeText = codeBlock.innerText;
+        
+        navigator.clipboard.writeText(codeText).then(() => {
+            const originalText = btn.textContent;
+            btn.textContent = '¡Copiado!';
+            btn.style.backgroundColor = 'var(--success-color)';
+            btn.style.borderColor = 'var(--success-color)';
+            
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.style.backgroundColor = '';
+                btn.style.borderColor = '';
+            }, 2000);
+        }, (err) => {
+            alert('Error al copiar el código: ' + err);
+        });
+    }
+</script>
+
+</body>
+</html>
