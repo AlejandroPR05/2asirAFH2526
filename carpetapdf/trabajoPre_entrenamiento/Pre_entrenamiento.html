@@ -1,1 +1,433 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual: Pre-entrenamiento de IA en Windows 11</title>
+    <style>
+        :root {
+            --primary: #0078D4; /* Azul Windows 11 */
+            --bg: #f3f3f3;
+            --text: #333;
+            --code-bg: #1e1e1e;
+            --code-text: #d4d4d4;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: var(--bg);
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        h1, h2, h3 {
+            color: var(--primary);
+        }
+        h1 { border-bottom: 2px solid var(--primary); padding-bottom: 10px; }
+        h2 { margin-top: 30px; border-left: 5px solid var(--primary); padding-left: 10px; }
+        
+        .note {
+            background-color: #e6f7ff;
+            border-left: 5px solid #0078D4;
+            padding: 15px;
+            margin: 20px 0;
+            font-size: 0.95em;
+        }
+        
+        code {
+            background-color: #eee;
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            color: #d63384;
+        }
+        
+        pre {
+            background-color: var(--code-bg);
+            color: var(--code-text);
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 0.9em;
+        }
 
+        .step {
+            background: #fff;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .step-number {
+            font-weight: bold;
+            font-size: 1.2em;
+            color: var(--primary);
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        button.copy-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            float: right;
+            font-size: 0.8em;
+        }
+        button.copy-btn:hover { background-color: #005a9e; }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 0.8em;
+            color: #666;
+        }
+        
+        /* Citations style */
+        .cite {
+            font-size: 0.75em;
+            color: #888;
+            vertical-align: super;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Guía Práctica: Pre-entrenamiento de un "Nano-Modelo" de IA</h1>
+    <p>Este manual está diseñado para guiarte paso a paso en el proceso de crear y pre-entrenar una Inteligencia Artificial pequeña desde cero en <strong>Windows 11</strong>. [cite_start]El objetivo no es crear un competidor de GPT-4, sino entender conceptualmente cómo aprenden estos modelos[cite: 69].</p>
+
+    <div class="note">
+        [cite_start]<strong>Concepto Clave:</strong> El pre-entrenamiento es la fase donde el modelo adquiere conocimiento general prediciendo la siguiente palabra (o carácter) en un texto masivo[cite: 3, 10]. [cite_start]En este ejercicio, nuestro "internet" será únicamente el libro <em>Don Quijote de la Mancha</em>[cite: 72].
+    </div>
+
+    <h2>1. Conceptos Fundamentales</h2>
+    <p>Antes de empezar, entiende las tres piezas que vamos a construir:</p>
+    <ul>
+        <li><strong>El Dataset:</strong> El texto crudo. [cite_start]El modelo aprenderá el estilo del castellano del siglo XVII[cite: 74].</li>
+        <li><strong>El Tokenizador:</strong> El traductor que convierte texto en números. [cite_start]Las IAs no leen letras, procesan secuencias numéricas[cite: 21, 22].</li>
+        <li><strong>El Transformer:</strong> El cerebro de la operación. [cite_start]Una arquitectura de red neuronal que usa el mecanismo de "atención" para entender el contexto y generar texto nuevo[cite: 38, 42].</li>
+    </ul>
+    
+    
+    <hr>
+
+    <h2>2. Preparación del Entorno en Windows 11</h2>
+    
+    <div class="step">
+        <span class="step-number">Paso 2.1: Instalar Python</span>
+        [cite_start]<p>Necesitamos el lenguaje de programación Python[cite: 77].</p>
+        <ol>
+            <li>Ve a la Microsoft Store o a <a href="https://www.python.org/downloads/" target="_blank">python.org</a>.</li>
+            <li>Descarga la última versión (ej. 3.10, 3.11 o 3.12).</li>
+            <li><strong>MUY IMPORTANTE:</strong> Al instalar, marca la casilla que dice <code>Add Python to PATH</code>. Si no lo haces, los comandos no funcionarán en la terminal.</li>
+        </ol>
+    </div>
+
+    <div class="step">
+        <span class="step-number">Paso 2.2: Crear la carpeta del proyecto</span>
+        <ol>
+            <li>Haz clic derecho en tu Escritorio (o donde prefieras) -> <strong>Nuevo</strong> -> <strong>Carpeta</strong>.</li>
+            <li>Nómbrala <code>mi_nano_gpt</code>.</li>
+            <li>Entra en la carpeta.</li>
+            <li>Haz clic derecho en un espacio vacío y selecciona <strong>"Abrir en Terminal"</strong>. Se abrirá una ventana negra o azul (PowerShell).</li>
+        </ol>
+    </div>
+
+    <div class="step">
+        <span class="step-number">Paso 2.3: Instalar PyTorch</span>
+        [cite_start]<p>PyTorch es la librería de inteligencia artificial que usaremos[cite: 78]. En la terminal que acabas de abrir, escribe el siguiente comando y pulsa Enter:</p>
+        <pre><code>pip install torch</code></pre>
+        <p><em>Nota: Esto puede tardar unos minutos dependiendo de tu internet.</em></p>
+    </div>
+
+    <hr>
+
+    <h2>3. Obtención de los Datos (El Dataset)</h2>
+    <div class="step">
+        <span class="step-number">Paso 3.1: Descargar el Quijote</span>
+        [cite_start]<p>Necesitamos el texto plano de "Don Quijote" para que sea el universo de entrenamiento de nuestra IA[cite: 81].</p>
+        <ol>
+            <li>Descarga el archivo <code>quijote.txt</code>. Puedes obtenerlo del Proyecto Gutenberg o crear un archivo de texto vacío y pegar un fragmento largo del libro.</li>
+            [cite_start]<li>Para este tutorial, asegúrate de que el archivo se llame exactamente <code>quijote.txt</code> y esté guardado dentro de tu carpeta <code>mi_nano_gpt</code>[cite: 83].</li>
+            <li>Asegúrate de que la codificación sea <strong>UTF-8</strong> (El Bloc de notas de Windows 11 suele guardar en UTF-8 por defecto).</li>
+        </ol>
+    </div>
+
+    <hr>
+
+    <h2>4. El Código (El Cerebro)</h2>
+    <p>A continuación se presenta el código completo en Python. [cite_start]Este script realiza todas las tareas: lee el archivo, entrena el tokenizador, define la arquitectura Transformer y ejecuta el entrenamiento[cite: 109].</p>
+    
+    <div class="note">
+        <strong>Nota técnica:</strong> Se han corregido errores de sintaxis presentes en el documento original (como indentaciones incorrectas y nombres de funciones mal escritos debido al OCR) para asegurar que funcione en tu PC.
+    </div>
+
+    <div class="step">
+        <span class="step-number">Paso 4.1: Crear el script de entrenamiento</span>
+        <ol>
+            <li>En tu carpeta <code>mi_nano_gpt</code>, haz clic derecho -> Nuevo -> Documento de texto.</li>
+            <li>Llámalo <code>entrenar.py</code> (asegúrate de que la extensión sea .py y no .txt). Si Windows oculta las extensiones, ve a "Ver" -> "Mostrar" -> "Extensiones de nombre de archivo".</li>
+            <li>Haz clic derecho en <code>entrenar.py</code> -> Abrir con -> Bloc de notas (o VS Code si lo tienes).</li>
+            <li>Copia y pega el siguiente código íntegro:</li>
+        </ol>
+
+<pre><code id="codeBlock">import torch
+import torch.nn as nn
+from torch.nn import functional as F
+
+# --- Hiperparámetros ---
+[cite_start]batch_size = 32        # Cuántas secuencias procesamos en paralelo [cite: 117]
+[cite_start]block_size = 128       # Longitud máxima del contexto [cite: 118]
+[cite_start]max_iters = 5000       # Número de iteraciones de entrenamiento [cite: 119]
+[cite_start]eval_interval = 500    # Cada cuánto evaluamos el loss [cite: 122]
+[cite_start]learning_rate = 3e-4   # Tasa de aprendizaje [cite: 123]
+[cite_start]device = 'cuda' if torch.cuda.is_available() else 'cpu' # Usa GPU si tienes NVIDIA, sino CPU [cite: 124]
+[cite_start]n_embd = 256           # Dimensión de los embeddings [cite: 126]
+[cite_start]n_head = 4             # Número de cabezas de atención [cite: 127]
+[cite_start]n_layer = 4            # Número de bloques Transformer [cite: 129]
+[cite_start]dropout = 0.2          # Para evitar memorización exacta [cite: 130]
+
+print(f"Usando dispositivo: {device}")
+
+# --- 1. Carga y Tokenización ---
+torch.manual_seed(1337)
+
+try:
+    with open('quijote.txt', 'r', encoding='utf-8') as f:
+        text = f.read()
+except FileNotFoundError:
+    print("Error: No se encuentra 'quijote.txt'. Asegúrate de que esté en la misma carpeta.")
+    exit()
+
+# [cite_start]Crear vocabulario (caracteres únicos) [cite: 90, 91]
+chars = sorted(list(set(text)))
+vocab_size = len(chars)
+print(f"Tamaño del vocabulario: {vocab_size} caracteres")
+
+# [cite_start]Mapeos de caracteres a enteros y viceversa [cite: 101, 102]
+stoi = {ch:i for i,ch in enumerate(chars)}
+itos = {i:ch for i,ch in enumerate(chars)}
+encode = lambda s: [stoi[c] for c in s] # string -> lista de enteros
+decode = lambda l: ''.join([itos[i] for i in l]) # lista de enteros -> string
+
+# [cite_start]Preparar datos para PyTorch [cite: 138]
+data = torch.tensor(encode(text), dtype=torch.long)
+n = int(0.9*len(data)) # 90% para entrenar, 10% para validar
+train_data = data[:n]
+val_data = data[n:]
+
+# [cite_start]--- Función para obtener lotes (batches) --- [cite: 142]
+def get_batch(split):
+    data = train_data if split == 'train' else val_data
+    ix = torch.randint(len(data) - block_size, (batch_size,))
+    x = torch.stack([data[i:i+block_size] for i in ix])
+    y = torch.stack([data[i+1:i+block_size+1] for i in ix])
+    x, y = x.to(device), y.to(device)
+    return x, y
+
+# [cite_start]--- Estimación de pérdida (Loss) --- [cite: 150]
+@torch.no_grad()
+def estimate_loss():
+    out = {}
+    model.eval()
+    for split in ['train', 'val']:
+        losses = torch.zeros(200)
+        for k in range(200):
+            X, Y = get_batch(split)
+            logits, loss = model(X, Y)
+            losses[k] = loss.item()
+        out[split] = losses.mean()
+    model.train()
+    return out
+
+# --- Arquitectura del Modelo ---
+
+class Head(nn.Module):
+    """ Una cabeza de auto-atención """
+    def __init__(self, head_size):
+        super().__init__()
+        self.key = nn.Linear(n_embd, head_size, bias=False)
+        self.query = nn.Linear(n_embd, head_size, bias=False)
+        self.value = nn.Linear(n_embd, head_size, bias=False)
+        self.register_buffer('tril', torch.tril(torch.ones(block_size, block_size)))
+        self.dropout = nn.Dropout(dropout)
+
+    def forward(self, x):
+        B,T,C = x.shape
+        k = self.key(x)   # (B,T,head_size)
+        q = self.query(x) # (B,T,head_size)
+        # Calcular scores de atención ("afinidad")
+        wei = q @ k.transpose(-2,-1) * C**-0.5 # (B, T, T)
+        wei = wei.masked_fill(self.tril[:T, :T] == 0, float('-inf'))
+        wei = F.softmax(wei, dim=-1)
+        wei = self.dropout(wei)
+        # Agregar los valores
+        v = self.value(x)
+        out = wei @ v
+        return out
+
+class MultiHeadAttention(nn.Module):
+    """ Múltiples cabezas de atención en paralelo """
+    def __init__(self, num_heads, head_size):
+        super().__init__()
+        self.heads = nn.ModuleList([Head(head_size) for _ in range(num_heads)])
+        self.proj = nn.Linear(n_embd, n_embd)
+        self.dropout = nn.Dropout(dropout)
+
+    def forward(self, x):
+        out = torch.cat([h(x) for h in self.heads], dim=-1)
+        out = self.dropout(self.proj(out))
+        return out
+
+class FeedForward(nn.Module):
+    """ Una capa simple lineal seguida de no-linealidad """
+    def __init__(self, n_embd):
+        super().__init__()
+        self.net = nn.Sequential(
+            nn.Linear(n_embd, 4 * n_embd),
+            nn.ReLU(),
+            nn.Linear(4 * n_embd, n_embd),
+            nn.Dropout(dropout),
+        )
+
+    def forward(self, x):
+        return self.net(x)
+
+class Block(nn.Module):
+    """ Bloque Transformer: Comunicación seguida de Computación """
+    def __init__(self, n_embd, n_head):
+        super().__init__()
+        head_size = n_embd // n_head
+        self.sa = MultiHeadAttention(n_head, head_size)
+        self.ffwd = FeedForward(n_embd)
+        self.ln1 = nn.LayerNorm(n_embd)
+        self.ln2 = nn.LayerNorm(n_embd)
+
+    def forward(self, x):
+        x = x + self.sa(self.ln1(x))
+        x = x + self.ffwd(self.ln2(x))
+        return x
+
+class LanguageModel(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.token_embedding_table = nn.Embedding(vocab_size, n_embd)
+        self.position_embedding_table = nn.Embedding(block_size, n_embd)
+        self.blocks = nn.Sequential(*[Block(n_embd, n_head=n_head) for _ in range(n_layer)])
+        self.ln_f = nn.LayerNorm(n_embd) # Layer norm final
+        self.lm_head = nn.Linear(n_embd, vocab_size)
+
+    def forward(self, idx, targets=None):
+        B, T = idx.shape
+        tok_emb = self.token_embedding_table(idx) # (B,T,C)
+        pos_emb = self.position_embedding_table(torch.arange(T, device=device)) # (T,C)
+        x = tok_emb + pos_emb
+        x = self.blocks(x)
+        x = self.ln_f(x)
+        logits = self.lm_head(x) # (B,T,vocab_size)
+
+        if targets is None:
+            loss = None
+        else:
+            B, T, C = logits.shape
+            logits = logits.view(B*T, C)
+            targets = targets.view(B*T)
+            loss = F.cross_entropy(logits, targets)
+
+        return logits, loss
+
+    def generate(self, idx, max_new_tokens):
+        # idx es un array (B, T) de índices en el contexto actual
+        for _ in range(max_new_tokens):
+            idx_cond = idx[:, -block_size:] # Recortar al contexto máximo
+            logits, loss = self(idx_cond)
+            logits = logits[:, -1, :] # Enfocarse solo en el último paso de tiempo
+            probs = F.softmax(logits, dim=-1) # (B, C)
+            idx_next = torch.multinomial(probs, num_samples=1) # (B, 1)
+            idx = torch.cat((idx, idx_next), dim=1) # (B, T+1)
+        return idx
+
+# [cite_start]--- Bucle de Entrenamiento --- [cite: 239]
+model = LanguageModel()
+m = model.to(device)
+optimizer = torch.optim.AdamW(model.parameters(), lr=learning_rate)
+
+print(f"Iniciando entrenamiento por {max_iters} iteraciones...")
+
+for iter in range(max_iters):
+    # Cada cierto tiempo imprimimos el error
+    if iter % eval_interval == 0:
+        losses = estimate_loss()
+        print(f"Iteración {iter}: train loss {losses['train']:.4f}, val loss {losses['val']:.4f}")
+
+    # Obtener lote y entrenar
+    xb, yb = get_batch('train')
+    logits, loss = model(xb, yb)
+    optimizer.zero_grad(set_to_none=True)
+    loss.backward()
+    optimizer.step()
+
+# [cite_start]--- Generación Final --- [cite: 255]
+print("\n--- ¡Entrenamiento completado! Generando texto estilo Cervantes... ---\n")
+context = torch.zeros((1, 1), dtype=torch.long, device=device)
+generated_text = decode(m.generate(context, max_new_tokens=500)[0].tolist())
+print(generated_text)
+</code></pre>
+        <button class="copy-btn" onclick="copyCode()">Copiar Código</button>
+        <div style="clear:both;"></div>
+    </div>
+
+    <hr>
+
+    <h2>5. Ejecución y Resultados</h2>
+    <div class="step">
+        <span class="step-number">Paso 5.1: Ejecutar la IA</span>
+        <ol>
+            <li>Vuelve a la terminal (pantalla negra/azul) que abriste en el Paso 2.</li>
+            <li>Escribe el siguiente comando:</li>
+        </ol>
+        <pre><code>python entrenar.py</code></pre>
+        <p>Verás cómo comienza el entrenamiento. Aparecerán mensajes mostrando el "Loss" (error). [cite_start]Al principio el loss será alto (el modelo no sabe nada), pero irá bajando[cite: 259].</p>
+    </div>
+
+    <div class="step">
+        <span class="step-number">Paso 5.2: Interpretar la Salida</span>
+        <p>Al finalizar las 5000 iteraciones, el script generará un texto. ¿Qué debes esperar?</p>
+        <ul>
+            [cite_start]<li><strong>No tendrá sentido perfecto:</strong> Es un modelo "nano", muy pequeño comparado con GPT-4[cite: 260].</li>
+            [cite_start]<li><strong>Estilo Cervantino:</strong> Usará palabras como "vuestra merced", "caballero", y estructuras antiguas[cite: 261].</li>
+            [cite_start]<li><strong>Gramática básica:</strong> Habrá aprendido dónde poner puntos y comas, y cómo estructurar diálogos vagamente[cite: 262].</li>
+        </ul>
+    </div>
+
+    <footer>
+        <p>Manual generado basado en "Curso IA Pre-Entrenamiento". Material educativo.</p>
+    </footer>
+</div>
+
+<script>
+    function copyCode() {
+        const code = document.getElementById('codeBlock').innerText;
+        navigator.clipboard.writeText(code).then(() => {
+            alert('Código copiado al portapapeles. Pégalo en tu archivo entrenar.py');
+        });
+    }
+</script>
+
+</body>
+</html>
